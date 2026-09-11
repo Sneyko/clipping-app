@@ -51,7 +51,7 @@ export default function OverviewPage() {
         title={`Salut ${currentClipper.name.split(" ")[0]}.`}
         description={`${program.pitch} ${program.demoNotice}`}
         action={
-          <Button variant="outline" onClick={refresh} disabled={loading}>
+          <Button variant="outline" onClick={refresh} disabled={loading} id="refresh-overview">
             <RefreshCw className={loading ? "animate-spin" : ""} data-icon="inline-start" />
             Actualiser
           </Button>

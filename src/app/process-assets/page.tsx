@@ -64,6 +64,7 @@ export default function AssetsPage() {
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Input
+          id="asset-search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Filtrer un asset…"

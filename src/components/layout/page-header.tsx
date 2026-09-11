@@ -12,7 +12,7 @@ export function PageHeader({
   action?: ReactNode;
 }) {
   return (
-    <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       <div className="max-w-2xl">
         {kicker ? (
           <p className="mb-2 text-[11px] font-medium tracking-[0.2em] text-muted-foreground uppercase">

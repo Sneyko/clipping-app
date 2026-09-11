@@ -116,6 +116,7 @@ export function PaymentsRail({ compact = false }: { compact?: boolean }) {
       <Button
         className="w-full"
         disabled={!canWithdraw}
+        data-testid="request-payout"
         onClick={() => setOpen(true)}
       >
         Demander un virement
