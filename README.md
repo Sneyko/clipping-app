@@ -32,7 +32,16 @@ Next.js (App Router) · TypeScript · Tailwind CSS · shadcn/ui.
 - Score d’hygiène Shadowban (pas un détecteur magique)
 - Demandes de virement simulées (localStorage)
 
-## Ce qui est reporté
+## Déploiement Vercel
+
+Le CLI Vercel de cet environnement est **déconnecté** (`vercel whoami` → Logged out, pas de `VERCEL_TOKEN`). Un déploiement anonyme temporaire peut être créé avec `npx vercel deploy --temporary --yes`, mais il expire (~1 h) tant qu’il n’est pas réclamé.
+
+Pour un projet durable :
+
+```bash
+npx vercel login
+npx vercel --yes --prod
+```
 
 - Compte utilisateur / auth
 - Base de données
