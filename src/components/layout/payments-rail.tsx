@@ -109,7 +109,7 @@ export function PaymentsRail({ compact = false }: { compact?: boolean }) {
           <span className="text-foreground">{formatEuro(program.cpmUs)} / 1k</span>
         </p>
         <p className="mt-2 text-[11px] text-muted-foreground">
-          Pas de revenu garanti. Les vues non validées ne comptent pas.
+          Pas de revenu garanti. Les vues non validées ne comptent pas. On lit le post avant de payer.
         </p>
       </div>
 

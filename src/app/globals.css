@@ -134,4 +134,7 @@
     font-weight: 400;
     letter-spacing: -0.02em;
   }
+  ::selection {
+    background: color-mix(in oklch, var(--foreground) 12%, transparent);
+  }
 }

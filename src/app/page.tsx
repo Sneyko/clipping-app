@@ -19,6 +19,7 @@ import {
   announcements,
   currentClipper,
   overviewKpis,
+  overviewTodos,
   program,
   recentClips,
   weekViews,
@@ -118,14 +119,10 @@ export default function OverviewPage() {
         <Card>
           <CardHeader>
             <CardTitle>À faire cette semaine</CardTitle>
-            <CardDescription>Le chemin le plus court vers un clip validé.</CardDescription>
+            <CardDescription>Recherche, puis batch — pas un chef-d’œuvre isolé.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            {[
-              { href: "/demarrage", label: "Finir Démarrage", hint: "Checklist persistante" },
-              { href: "/slideshow-lab", label: "Un slideshow EN", hint: "Si tu vises Poster US" },
-              { href: "/format", label: "Relire les safe zones", hint: "Avant de recoller un refus" },
-            ].map((item) => (
+            {overviewTodos.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

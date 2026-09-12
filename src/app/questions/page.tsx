@@ -29,7 +29,7 @@ export default function QuestionsPage() {
       <PageHeader
         kicker="Questions"
         title="Les questions qu’on pose vraiment."
-        description="Paiement, US, multi-compte, API. Si ça n’est pas ici, c’est probablement « pas encore » — Stripe et TikTok viendront plus tard."
+        description="Paiement, US, multi-compte, CTA, API. Si ça n’est pas ici, c’est probablement « pas encore » — Stripe et TikTok viendront plus tard."
       />
 
       <Input
@@ -42,7 +42,7 @@ export default function QuestionsPage() {
       {items.length === 0 ? (
         <EmptyState
           title="Rien sur ce mot"
-          body="Essaie « CPM », « VPN », « API » ou « virement »."
+          body="Essaie « CPM », « VPN », « CTA », « commentaires » ou « virement »."
           action={
             <Button size="sm" variant="outline" onClick={() => setQuery("")}>
               Vider la recherche

@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/layout/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -16,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { clippers, currentClipper, storageKeys } from "@/lib/data";
+import { clippers, currentClipper, storageKeys, submitChecks } from "@/lib/data";
 import { formatEuro, formatNumber } from "@/lib/format";
 import { useLocalState } from "@/hooks/use-local-state";
 
@@ -27,6 +28,7 @@ export default function ClippersPage() {
   const [niche, setNiche] = useState("Toutes");
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
+  const [ready, setReady] = useState<string[]>([]);
   const [subs, setSubs] = useLocalState<{ url: string; at: string }[]>(
     storageKeys.submissions,
     []
@@ -53,6 +55,12 @@ export default function ClippersPage() {
   function submitClip(e: React.FormEvent) {
     e.preventDefault();
     if (!url.trim()) return;
+    if (ready.length < submitChecks.length) {
+      toast.error("Revue incomplète", {
+        description: "On vérifie le post avant de payer. Coche les 4 points.",
+      });
+      return;
+    }
     setSubs((prev) => [
       { url: url.trim(), at: new Date().toLocaleString("fr-FR") },
       ...prev,
@@ -68,7 +76,7 @@ export default function ClippersPage() {
       <PageHeader
         kicker="Clippers"
         title="Le roster de la semaine."
-        description={`Tu es ${currentClipper.handle}. Un compte déclaré, un code ${currentClipper.code}. Les chiffres sont une démo.`}
+        description={`Tu es ${currentClipper.handle}. Un compte déclaré, un code ${currentClipper.code}. On lit chaque lien avant de payer — pas après. Les chiffres sont une démo.`}
         action={
           <Button variant="outline" onClick={fakeRefresh} disabled={loading}>
             {loading ? "Chargement…" : "Actualiser"}
@@ -92,6 +100,21 @@ export default function ClippersPage() {
         <Button type="submit" className="sm:mt-6">
           Envoyer
         </Button>
+        <div className="grid gap-2 sm:col-span-2 sm:grid-cols-2">
+          {submitChecks.map((item) => (
+            <label key={item.id} className="flex items-start gap-2 text-xs leading-relaxed">
+              <Checkbox
+                checked={ready.includes(item.id)}
+                onCheckedChange={() =>
+                  setReady((prev) =>
+                    prev.includes(item.id) ? prev.filter((x) => x !== item.id) : [...prev, item.id]
+                  )
+                }
+              />
+              <span>{item.label}</span>
+            </label>
+          ))}
+        </div>
         {subs.length > 0 ? (
           <p className="text-xs text-muted-foreground sm:col-span-2">
             Dernier : {subs[0].url} · {subs[0].at}

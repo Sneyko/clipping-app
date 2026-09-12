@@ -24,24 +24,29 @@ Next.js (App Router) · TypeScript · Tailwind CSS · shadcn/ui.
 
 ## Ce qui est livré
 
-- Navigation complète (desktop + mobile)
-- Copy française réelle, états vides / chargement / erreur
-- SlideshowLab (modèles, édition, aperçu 9:16, copie du pack)
-- Kit Process Assets (filtre + téléchargement simulé)
-- Poster US **éducatif** : pas de VPN, pas de spoof, pas de script de contournement
+- Navigation complète (desktop + mobile), copy française
+- **Démarrage** : checklist + guide (recherche de format, payoff, un seul compte)
+- **SlideshowLab** : squelettes (notif, payoff slide 4, guide), variations, aperçu 9:16, batch de la semaine
+- **Format** : bibliothèque de mécanismes, carnet de recherche, packaging (icône / 3 captures), cadre 9:16, interdits
+- **Process Assets** : footage pack groupé (logo, histoire store, B-roll, angles)
+- **Automatiser** : jobs séparés, batch hebdo, tableau tuer/doubler — pas d’auto-post unofficial
+- **Clippers** : revue avant envoi (CTA, icône, angle, un compte)
+- Poster US **éducatif** : pas de VPN, pas de spoof, pas de ferme, pas de script de contournement
 - Score d’hygiène Shadowban (pas un détecteur magique)
 - Demandes de virement simulées (localStorage)
 
 ## Déploiement Vercel
 
-Le CLI Vercel de cet environnement est **déconnecté** (`vercel whoami` → Logged out, pas de `VERCEL_TOKEN`). Un déploiement anonyme temporaire peut être créé avec `npx vercel deploy --temporary --yes`, mais il expire (~1 h) tant qu’il n’est pas réclamé.
-
-Pour un projet durable :
+Le CLI Vercel de cet environnement est souvent **déconnecté**. Un déploiement anonyme temporaire :
 
 ```bash
-npx vercel login
-npx vercel --yes --prod
+rm -f .vercel/anonymous.json
+npx vercel deploy --temporary --yes
 ```
+
+Il expire (~1 h) tant qu’il n’est pas réclamé. Pour un projet durable : `npx vercel login` puis `npx vercel --yes --prod`.
+
+## Plus tard
 
 - Compte utilisateur / auth
 - Base de données

@@ -38,9 +38,10 @@ export default function PosterUsPage() {
         <TriangleAlert />
         <AlertTitle>Ligne rouge</AlertTitle>
         <AlertDescription>
-          Process Clipping n’inclut aucun script, proxy, spoof de localisation ou
-          automation pour contourner les restrictions géographiques de TikTok.
-          Les ToS s’appliquent. Si tu te fais ban pour ça, tes gains sont gelés.
+          Process Clipping n’inclut aucun script, proxy, spoof de localisation,
+          ferme de téléphones ou automation pour contourner les restrictions
+          géographiques de TikTok. Les ToS s’appliquent. Si tu te fais ban pour ça,
+          tes gains sont gelés.
         </AlertDescription>
       </Alert>
 
