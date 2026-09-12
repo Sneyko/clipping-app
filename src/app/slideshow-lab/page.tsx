@@ -338,7 +338,7 @@ export default function SlideshowLabPage() {
       <section className="mt-12">
         <h2 className="font-heading text-2xl tracking-tight">Batch de la semaine</h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Dix créneaux. Un squelette. Tu n’attends pas lundi pour inventer. L’agent / Postiz, c’est pour plus tard — ici, tu organises à la main.
+          Dix créneaux. Un squelette. Tu n’attends pas lundi pour inventer. L’ordonnancement auto, c’est pour plus tard — ici, tu organises à la main.
         </p>
         <ol className="mt-4 grid gap-2 sm:grid-cols-2">
           {weekBatchSlots.map((slot, i) => (

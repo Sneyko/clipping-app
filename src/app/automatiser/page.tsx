@@ -40,7 +40,7 @@ const decisionLabel = {
 export default function AutomatiserPage() {
   const [enabled, setEnabled] = useLocalState<Record<string, boolean>>(
     storageKeys.automations,
-    { cadence: true, capcut: true, batch: true, recherche: true }
+    { cadence: true, capcut: true, batch: true, recherche: true, split: true, kill: true }
   );
   const [apiError, setApiError] = useState<string | null>(null);
   const [board, setBoard] = useLocalState<KillRow[]>(storageKeys.killBoard, defaultKillBoard);
@@ -199,7 +199,7 @@ export default function AutomatiserPage() {
         <Button
           variant="outline"
           onClick={() => {
-            setEnabled({ cadence: true, capcut: true, batch: true, recherche: true, kill: true });
+            setEnabled({ cadence: true, capcut: true, batch: true, recherche: true, kill: true, split: true });
             toast.success("Rituels recommandés réactivés");
           }}
         >
