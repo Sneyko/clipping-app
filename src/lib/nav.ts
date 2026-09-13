@@ -32,6 +32,11 @@ export const navItems: NavItem[] = [
   { href: "/questions", label: "Questions", hint: "FAQ", icon: CircleHelp },
 ];
 
+export const navGroups: { label: string | null; items: NavItem[] }[] = [
+  { label: null, items: navItems.slice(0, 7) },
+  { label: "Utiles", items: navItems.slice(7) },
+];
+
 export function pageMeta(pathname: string) {
   const exact = navItems.find((item) => item.href === pathname);
   if (exact) return exact;

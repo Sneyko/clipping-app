@@ -36,7 +36,7 @@ export function Storyboard({
               isCta ? "border-foreground/40" : "border-foreground/10"
             )}
           >
-            <div className="aspect-[9/14] px-3 pt-5 pb-3">
+            <div className="min-h-[132px] px-3 pt-4 pb-3">
               <p className="text-[9px] tracking-[0.16em] text-neutral-500 uppercase">
                 {slide ? roleLabel[slide.role] : p.fallback}
                 {isCta ? " · app" : ""}
@@ -45,7 +45,7 @@ export function Storyboard({
                 {slide?.text || "—"}
               </p>
             </div>
-            <p className="border-t border-foreground/8 bg-background/70 px-2 py-1.5 text-center text-[10px] text-muted-foreground">
+            <p className="border-t border-border bg-background/70 px-2 py-1.5 text-center text-[10px] text-muted-foreground">
               Slide {p.i + 1}
             </p>
           </div>

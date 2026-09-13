@@ -88,7 +88,7 @@ export default function ShadowbanPage() {
               <CardDescription>{label}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="font-heading text-4xl tracking-tight">{hygiene}%</p>
+              <p className="font-heading text-[2.5rem] tracking-tight tabular">{hygiene}%</p>
               <Progress value={hygiene} className="mt-3" />
               <p className="mt-3 text-xs text-muted-foreground">
                 Score inverse des signaux cochés (pondérés). Ce n’est pas une

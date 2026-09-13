@@ -151,7 +151,7 @@ export default function FormatPage() {
             </ul>
           </div>
 
-          <form onSubmit={saveNote} className="space-y-3 rounded-xl border border-foreground/8 bg-card p-4">
+          <form onSubmit={saveNote} className="space-y-3 rounded-lg border border-border bg-card p-4">
             <p className="text-sm font-medium">Noter un format (local)</p>
             <Input
               placeholder="Lien TikTok ou titre interne"
@@ -196,7 +196,7 @@ export default function FormatPage() {
           ) : (
             <ul className="space-y-2 lg:col-span-2">
               {notes.map((n) => (
-                <li key={n.id} className="rounded-lg border border-foreground/8 bg-card px-4 py-3">
+                <li key={n.id} className="rounded-lg border border-border bg-card px-4 py-3">
                   <p className="text-sm font-medium">{n.hook || n.mechanism}</p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {n.source ? `${n.source} · ` : ""}

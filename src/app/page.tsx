@@ -71,7 +71,7 @@ export default function OverviewPage() {
         </Alert>
       ) : null}
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
         {overviewKpis.map((kpi) => (
           <Card key={`${kpi.id}-${tick}`} size="sm">
             <CardHeader>
@@ -79,7 +79,9 @@ export default function OverviewPage() {
               {loading ? (
                 <Skeleton className="h-8 w-24" />
               ) : (
-                <CardTitle className="font-heading text-2xl">{kpi.value}</CardTitle>
+                <CardTitle className="font-heading text-[1.35rem] tabular tracking-tight">
+                  {kpi.value}
+                </CardTitle>
               )}
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground">
@@ -89,7 +91,7 @@ export default function OverviewPage() {
         ))}
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className="mt-5 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <Card>
           <CardHeader>
             <CardTitle>Vues · 7 jours</CardTitle>
@@ -101,12 +103,12 @@ export default function OverviewPage() {
             {loading ? (
               <Skeleton className="h-40 w-full" />
             ) : (
-              <div className="flex h-40 items-end gap-2">
+              <div className="flex h-36 items-end gap-1.5">
                 {weekViews.map((d) => (
-                  <div key={d.day} className="flex flex-1 flex-col items-center gap-2">
+                  <div key={d.day} className="flex flex-1 flex-col items-center gap-1.5">
                     <div
-                      className="w-full rounded-sm bg-foreground/85"
-                      style={{ height: `${d.views * 2.2}px` }}
+                      className="w-full rounded-[3px] bg-foreground/80"
+                      style={{ height: `${d.views * 2}px` }}
                     />
                     <span className="text-[11px] text-muted-foreground">{d.day}</span>
                   </div>
@@ -126,7 +128,7 @@ export default function OverviewPage() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center justify-between rounded-lg border border-foreground/8 px-3 py-2.5 text-sm transition-colors hover:bg-muted/60"
+                className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm transition-colors hover:bg-muted/70"
               >
                 <span>
                   <span className="block font-medium">{item.label}</span>
@@ -139,7 +141,7 @@ export default function OverviewPage() {
         </Card>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className="mt-5 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <Card>
           <CardHeader className="border-b">
             <CardTitle>Derniers clips</CardTitle>
@@ -157,7 +159,7 @@ export default function OverviewPage() {
                 {recentClips.map((clip) => (
                   <li
                     key={clip.id}
-                    className="flex flex-col gap-2 border-b border-foreground/6 px-4 py-3 last:border-0 sm:flex-row sm:items-center sm:justify-between"
+                    className="flex flex-col gap-1.5 border-b border-border/80 px-4 py-2.5 last:border-0 sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{clip.title}</p>

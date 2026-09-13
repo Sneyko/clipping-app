@@ -86,7 +86,7 @@ export default function ClippersPage() {
 
       <form
         onSubmit={submitClip}
-        className="mb-6 grid gap-2 rounded-xl border border-foreground/8 bg-card p-4 sm:grid-cols-[1fr_auto]"
+        className="mb-6 grid gap-2 rounded-lg border border-border bg-card p-4 sm:grid-cols-[1fr_auto]"
       >
         <div className="space-y-1.5">
           <Label htmlFor="tiktok-url">Soumettre un clip</Label>
@@ -163,7 +163,7 @@ export default function ClippersPage() {
       ) : loading ? (
         <p className="text-sm text-muted-foreground">Chargement du classement…</p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-foreground/8">
+        <div className="overflow-x-auto rounded-lg border border-border">
           <Table>
             <TableHeader>
               <TableRow>

@@ -66,39 +66,39 @@ export function PaymentsRail({ compact = false }: { compact?: boolean }) {
     <aside
       className={
         compact
-          ? "flex flex-col gap-5"
-          : "flex h-full flex-col gap-5 border-l border-foreground/8 bg-[color-mix(in_oklch,var(--background),var(--foreground)_2.5%)] px-5 py-6"
+          ? "flex h-full flex-col gap-4"
+          : "flex h-full flex-col gap-4 border-l border-border bg-background px-5 py-5"
       }
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] font-medium tracking-[0.18em] text-muted-foreground uppercase">
+          <p className="text-[10px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
             Paiements
           </p>
-          <p className="font-heading mt-1 text-2xl tracking-tight">
+          <p className="font-heading mt-1 text-[1.65rem] tracking-tight tabular">
             {formatEuro(balance)}
           </p>
           <p className="text-xs text-muted-foreground">
             Solde démo · {currentClipper.handle}
           </p>
         </div>
-        <span className="flex size-9 items-center justify-center rounded-full bg-foreground text-background">
+        <span className="flex size-8 items-center justify-center rounded-md bg-foreground text-background">
           <Wallet className="size-4" />
         </span>
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-xs">
-        <div className="rounded-lg border border-foreground/8 bg-background px-3 py-2.5">
+        <div className="rounded-md border border-border bg-muted/40 px-3 py-2">
           <p className="text-muted-foreground">En revue</p>
           <p className="mt-0.5 font-medium">{formatEuro(pending)}</p>
         </div>
-        <div className="rounded-lg border border-foreground/8 bg-background px-3 py-2.5">
+        <div className="rounded-md border border-border bg-muted/40 px-3 py-2">
           <p className="text-muted-foreground">Seuil</p>
           <p className="mt-0.5 font-medium">{formatEuro(program.payoutThreshold)}</p>
         </div>
       </div>
 
-      <div className="rounded-lg border border-foreground/8 bg-background px-3 py-3 text-xs leading-relaxed">
+      <div className="rounded-md border border-border bg-muted/30 px-3 py-3 text-xs leading-relaxed">
         <p className="font-medium">CPM indicatif</p>
         <p className="mt-1 flex justify-between text-muted-foreground">
           <span>France</span>

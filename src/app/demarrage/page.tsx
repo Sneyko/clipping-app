@@ -54,7 +54,7 @@ export default function DemarragePage() {
             <li
               key={step.id}
               className={cn(
-                "flex flex-col gap-3 rounded-xl border border-foreground/8 bg-card p-4 sm:flex-row sm:items-start sm:justify-between",
+                "flex flex-col gap-3 rounded-lg border border-border bg-card p-3.5 sm:flex-row sm:items-start sm:justify-between",
                 checked && "bg-muted/40"
               )}
             >
@@ -94,7 +94,7 @@ export default function DemarragePage() {
                   type="button"
                   onClick={() => setSection(item.id)}
                   className={cn(
-                    "w-full rounded-lg px-3 py-2 text-left text-[13px] transition-colors",
+                    "w-full rounded-md px-2.5 py-1.5 text-left text-[13px] transition-colors",
                     section === item.id
                       ? "bg-foreground text-background"
                       : "text-foreground/80 hover:bg-foreground/5"
@@ -108,7 +108,7 @@ export default function DemarragePage() {
         </nav>
 
         <article className="max-w-2xl">
-          <h2 className="font-heading text-3xl tracking-tight">{current.title}</h2>
+          <h2 className="font-heading text-[1.65rem] tracking-tight">{current.title}</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{current.lead}</p>
           <ol className="mt-6 space-y-3">
             {current.points.map((point, i) => (

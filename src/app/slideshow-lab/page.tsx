@@ -150,7 +150,7 @@ export default function SlideshowLabPage() {
         ))}
       </div>
 
-      <div className="mb-8 grid gap-4 rounded-xl border border-foreground/8 bg-card p-4 lg:grid-cols-[1.2fr_1fr]">
+      <div className="mb-8 grid gap-4 rounded-lg border border-border bg-card p-4 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <p className="text-[11px] tracking-[0.16em] text-muted-foreground uppercase">
             {template.structure}
@@ -193,7 +193,7 @@ export default function SlideshowLabPage() {
                     "flex items-center gap-2 rounded-lg border bg-card p-2",
                     index === draft.ctaSlide
                       ? "border-foreground/25"
-                      : "border-foreground/8"
+                      : "border-border"
                   )}
                 >
                   <span className="w-6 text-center text-xs text-muted-foreground">
@@ -336,7 +336,7 @@ export default function SlideshowLabPage() {
       </div>
 
       <section className="mt-12">
-        <h2 className="font-heading text-2xl tracking-tight">Batch de la semaine</h2>
+        <h2 className="font-heading text-xl tracking-tight">Batch de la semaine</h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Dix créneaux. Un squelette. Tu n’attends pas lundi pour inventer. L’ordonnancement auto, c’est pour plus tard — ici, tu organises à la main.
         </p>
@@ -344,7 +344,7 @@ export default function SlideshowLabPage() {
           {weekBatchSlots.map((slot, i) => (
             <li
               key={slot}
-              className="flex items-center gap-3 rounded-lg border border-foreground/8 bg-card px-3 py-2"
+              className="flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-2"
             >
               <span className="w-28 shrink-0 text-[11px] text-muted-foreground">{slot}</span>
               <Input

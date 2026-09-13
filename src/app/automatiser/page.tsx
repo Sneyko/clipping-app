@@ -125,7 +125,7 @@ export default function AutomatiserPage() {
       </div>
 
       <section className="mt-10">
-        <h2 className="font-heading text-2xl tracking-tight">Tableau tuer / doubler</h2>
+        <h2 className="font-heading text-xl tracking-tight">Tableau tuer / doubler</h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Après ~48 h : tu logs les vues. Moins de 3 k, le format meurt. Plus de 10–15 k, tu déclines. Lien à plat = tu bouges le CTA, tu ne relances pas le même.
         </p>
@@ -149,9 +149,9 @@ export default function AutomatiserPage() {
           </Button>
         </form>
 
-        <div className="overflow-x-auto rounded-xl border border-foreground/8">
+        <div className="overflow-x-auto rounded-lg border border-border">
           <table className="w-full text-sm">
-            <thead className="border-b border-foreground/8 text-left text-xs text-muted-foreground">
+            <thead className="border-b border-border text-left text-xs text-muted-foreground">
               <tr>
                 <th className="px-4 py-2.5 font-medium">Format</th>
                 <th className="px-4 py-2.5 font-medium text-right">Vues</th>

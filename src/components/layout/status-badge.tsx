@@ -16,7 +16,7 @@ export function StatusBadge({ status }: { status: string }) {
     <Badge
       variant="outline"
       className={cn(
-        "font-normal",
+        "font-normal text-[11px]",
         tone === "ok" && "border-emerald-700/20 bg-emerald-700/8 text-emerald-800",
         tone === "bad" && "border-destructive/20 bg-destructive/8 text-destructive",
         tone === "wait" && "border-amber-700/20 bg-amber-700/8 text-amber-900",

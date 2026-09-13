@@ -19,7 +19,7 @@ export function AssetMock({ kind, className }: { kind: AssetMock; className?: st
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-lg border border-foreground/8",
+        "relative overflow-hidden rounded-lg border border-border",
         className
       )}
     >

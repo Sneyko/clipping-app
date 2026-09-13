@@ -50,7 +50,7 @@ export default function QuestionsPage() {
           }
         />
       ) : (
-        <Accordion type="single" collapsible className="rounded-xl border border-foreground/8 px-4">
+        <Accordion type="single" collapsible className="rounded-lg border border-border px-4">
           {items.map((item, index) => (
             <AccordionItem key={item.q} value={`q-${index}`}>
               <AccordionTrigger className="text-left">{item.q}</AccordionTrigger>
