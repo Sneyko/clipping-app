@@ -1,115 +1,58 @@
-"use client";
-
-import { PageHeader } from "@/components/layout/page-header";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { shadowbanRecovery, shadowbanSignals, storageKeys } from "@/lib/data";
-import { useLocalState } from "@/hooks/use-local-state";
-import { Info } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { ArticleP, ArticleTitle, H2, Ol } from "@/components/layout/article";
+import Link from "next/link";
 
 export default function ShadowbanPage() {
-  const [flags, setFlags] = useLocalState<string[]>(storageKeys.shadowban, []);
-
-  const max = shadowbanSignals.reduce((sum, s) => sum + s.weight, 0);
-  const score = shadowbanSignals
-    .filter((s) => flags.includes(s.id))
-    .reduce((sum, s) => sum + s.weight, 0);
-  const hygiene = Math.max(0, Math.round(100 - (score / max) * 100));
-
-  function toggle(id: string) {
-    setFlags((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  }
-
-  const label =
-    hygiene >= 80 ? "Compte propre" : hygiene >= 50 ? "Vigilance" : "Hygiène faible";
-
   return (
-    <div>
-      <PageHeader
-        kicker="Shadowban"
-        title="Un score d’hygiène. Pas un oracle."
-        description="TikTok ne confirme pas les shadowbans. Aucun checker tiers n’y a accès. Coche ce que tu observes dans Analytics — on te donne un protocole, pas une magie."
-        action={
-          flags.length ? (
-            <Button variant="outline" onClick={() => setFlags([])}>
-              Tout décocher
-            </Button>
-          ) : null
-        }
+    <div className="mx-auto max-w-[640px] pb-16">
+      <p className="text-[13px] text-neutral-400">
+        <Link href="/questions" className="hover:text-neutral-700">
+          ‹ Utiles
+        </Link>
+      </p>
+      <p className="mt-3 text-[11px] font-medium tracking-[0.16em] text-neutral-400 uppercase">
+        UTILES
+      </p>
+      <ArticleTitle>Shadowban</ArticleTitle>
+      <ArticleP>
+        Si tu as ce message quand tu cliques sur « Plus de données », ta vidéo est shadowban.
+      </ArticleP>
+
+      <div className="mt-5 flex items-center gap-3 rounded-2xl border border-amber-200/80 bg-[#F8EDE0] px-4 py-3 text-[13.5px] leading-relaxed text-neutral-800">
+        <div className="min-w-0 flex-1">
+          Cette vidéo n’est pas éligible à la recommandation dans le fil d’actualité Pour toi. Si tu
+          n’es pas d’accord avec cette restriction de contenu, tu peux envoyer une contestation.
+        </div>
+        <ChevronRight className="size-4 shrink-0 text-neutral-500" />
+      </div>
+
+      <ArticleP>
+        Mais parfois tu n’as pas de message. Si tu fais moins de 50 vues, tu es shadowban.
+      </ArticleP>
+
+      <H2>Les raisons d’un shadowban ?</H2>
+      <Ol
+        items={[
+          "Tu n’as pas (assez) chauffé ton compte.",
+          "Tu postes des slideshows full IA.",
+          "Tu as posté beaucoup de slideshows en peu de temps.",
+        ]}
       />
 
-      <Alert className="mb-6">
-        <Info />
-        <AlertTitle>Pas un détecteur</AlertTitle>
-        <AlertDescription>
-          Ne colle jamais tes identifiants TikTok dans un « shadowban check ».
-          Ici, rien ne quitte le navigateur.
-        </AlertDescription>
-      </Alert>
-
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle>Signaux observables</CardTitle>
-            <CardDescription>Coche uniquement ce que tu as réellement vu.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {shadowbanSignals.map((item) => (
-              <div key={item.id} className="flex items-start gap-3">
-                <Checkbox
-                  id={item.id}
-                  checked={flags.includes(item.id)}
-                  onCheckedChange={() => toggle(item.id)}
-                />
-                <Label htmlFor={item.id} className="text-sm leading-relaxed font-normal">
-                  {item.label}
-                </Label>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <div className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Hygiène</CardTitle>
-              <CardDescription>{label}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="font-heading text-[2.5rem] tracking-tight tabular">{hygiene}%</p>
-              <Progress value={hygiene} className="mt-3" />
-              <p className="mt-3 text-xs text-muted-foreground">
-                Score inverse des signaux cochés (pondérés). Ce n’est pas une
-                preuve de restriction FYP.
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Protocole de reprise</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ol className="list-decimal space-y-1.5 pl-4 text-sm leading-relaxed text-muted-foreground">
-                {shadowbanRecovery.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      <H2>Comment ne pas être shadowban</H2>
+      <Ol
+        items={[
+          "Si tu es shadowban, ARRÊTE DE POSTER pendant 2 jours.",
+          "Scroll et like 15 min / jour.",
+          "Va sur TikTok Shop.",
+          "Ajoute des articles au panier.",
+          "Mets toutes tes infos jusqu’au paiement.",
+          "Relance l’app TikTok.",
+          "Continue de scroller.",
+          "Remplis toutes les vérifications d’identité (numéro, email…).",
+          "Poste 1 slideshow au bout de 3 jours.",
+        ]}
+      />
     </div>
   );
 }

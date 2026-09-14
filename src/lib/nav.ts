@@ -1,40 +1,43 @@
 import type { LucideIcon } from "lucide-react";
 import {
   CircleHelp,
-  Flag,
-  FolderOpen,
-  Layers3,
-  LayoutDashboard,
-  Ratio,
-  Rocket,
-  ShieldAlert,
+  Globe,
+  House,
+  Layers,
+  PlaySquare,
+  Plus,
+  Shield,
   Users,
-  Workflow,
 } from "lucide-react";
 
 export type NavItem = {
   href: string;
   label: string;
   hint: string;
-  icon: LucideIcon;
+  icon: LucideIcon | "tiktok" | "process";
 };
 
-export const navItems: NavItem[] = [
-  { href: "/", label: "Overview", hint: "Vue d’ensemble", icon: LayoutDashboard },
-  { href: "/demarrage", label: "Démarrage", hint: "Système + checklist", icon: Rocket },
-  { href: "/slideshow-lab", label: "SlideshowLab", hint: "Squelettes + batch", icon: Layers3 },
-  { href: "/process-assets", label: "Process Assets", hint: "Footage pack", icon: FolderOpen },
-  { href: "/format", label: "Format", hint: "Mécanismes", icon: Ratio },
-  { href: "/clippers", label: "Clippers", hint: "Revue avant paiement", icon: Users },
-  { href: "/automatiser", label: "Automatiser", hint: "Jobs + tuer/doubler", icon: Workflow },
-  { href: "/poster-us", label: "Poster US", hint: "Marché US", icon: Flag },
-  { href: "/shadowban", label: "Shadowban", hint: "Hygiène de compte", icon: ShieldAlert },
+export const mainNav: NavItem[] = [
+  { href: "/", label: "Overview", hint: "Vue d’ensemble", icon: House },
+  { href: "/demarrage", label: "Démarrage", hint: "Guide clipper", icon: PlaySquare },
+  { href: "/slideshow-lab", label: "SlideshowLab", hint: "Structures officielles", icon: Layers },
+  { href: "/process-assets", label: "Process Assets", hint: "Fichiers officiels", icon: "process" },
+  { href: "/format", label: "Format", hint: "Bibliothèque", icon: "tiktok" },
+  { href: "/clippers", label: "Clippers", hint: "Classement", icon: Users },
+  { href: "/automatiser", label: "Automatiser", hint: "Cadence", icon: Plus },
+];
+
+export const utilesNav: NavItem[] = [
+  { href: "/poster-us", label: "Poster US", hint: "Documentation", icon: Globe },
+  { href: "/shadowban", label: "Shadowban", hint: "Hygiène de compte", icon: Shield },
   { href: "/questions", label: "Questions", hint: "FAQ", icon: CircleHelp },
 ];
 
+export const navItems: NavItem[] = [...mainNav, ...utilesNav];
+
 export const navGroups: { label: string | null; items: NavItem[] }[] = [
-  { label: null, items: navItems.slice(0, 7) },
-  { label: "Utiles", items: navItems.slice(7) },
+  { label: null, items: mainNav },
+  { label: "UTILITES", items: utilesNav },
 ];
 
 export function pageMeta(pathname: string) {

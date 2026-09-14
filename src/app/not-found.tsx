@@ -4,13 +4,9 @@ import { Button } from "@/components/ui/button";
 export default function NotFound() {
   return (
     <div className="mx-auto max-w-lg py-16 text-center">
-      <p className="text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
-        404
-      </p>
-      <h1 className="font-heading mt-2 text-4xl tracking-tight">
-        Cette page n’existe pas.
-      </h1>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="text-[11px] tracking-[0.2em] text-neutral-400 uppercase">404</p>
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight">Cette page n’existe pas.</h1>
+      <p className="mt-2 text-sm text-neutral-500">
         Reviens à l’Overview, ou ouvre Démarrage si tu débutes.
       </p>
       <div className="mt-6 flex justify-center gap-2">

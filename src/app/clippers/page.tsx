@@ -1,204 +1,232 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { toast } from "sonner";
+import { Trophy } from "lucide-react";
 import { EmptyState } from "@/components/layout/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
-import { StatusBadge } from "@/components/layout/status-badge";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { clippers, currentClipper, storageKeys, submitChecks } from "@/lib/data";
-import { formatEuro, formatNumber } from "@/lib/format";
-import { useLocalState } from "@/hooks/use-local-state";
+import { clipperColors, clipperInitials, clippersRoster } from "@/lib/clippers";
+import { cn } from "@/lib/utils";
 
-const niches = ["Toutes", ...Array.from(new Set(clippers.map((c) => c.niche)))];
+const filters = ["Gains", "Ventes", "Essais", "Installs", "Visites"] as const;
 
 export default function ClippersPage() {
+  const [filter, setFilter] = useState<(typeof filters)[number]>("Gains");
   const [query, setQuery] = useState("");
-  const [niche, setNiche] = useState("Toutes");
   const [loading, setLoading] = useState(false);
-  const [url, setUrl] = useState("");
-  const [ready, setReady] = useState<string[]>([]);
-  const [subs, setSubs] = useLocalState<{ url: string; at: string }[]>(
-    storageKeys.submissions,
-    []
-  );
 
   const rows = useMemo(() => {
-    return clippers.filter((c) => {
-      const q = query.trim().toLowerCase();
-      const matchQ = !q || c.handle.toLowerCase().includes(q) || c.niche.toLowerCase().includes(q);
-      const matchN = niche === "Toutes" || c.niche === niche;
-      return matchQ && matchN;
-    });
-  }, [query, niche]);
+    const q = query.trim().toLowerCase();
+    return clippersRoster.filter(
+      (c) => !q || c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q)
+    );
+  }, [query]);
 
-  async function fakeRefresh() {
+  const you = clippersRoster.find((c) => c.you);
+  const podiumBase = query.trim() ? rows : clippersRoster;
+  const podium = [podiumBase[1], podiumBase[0], podiumBase[2]].filter(Boolean);
+
+  async function onFilter(next: (typeof filters)[number]) {
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
+    setFilter(next);
+    await new Promise((r) => setTimeout(r, 250));
     setLoading(false);
-    toast.message("Classement local", {
-      description: "Pas d’API TikTok. Les rangs ne bougent pas tout seuls.",
-    });
-  }
-
-  function submitClip(e: React.FormEvent) {
-    e.preventDefault();
-    if (!url.trim()) return;
-    if (ready.length < submitChecks.length) {
-      toast.error("Revue incomplète", {
-        description: "On vérifie le post avant de payer. Coche les 4 points.",
-      });
-      return;
-    }
-    setSubs((prev) => [
-      { url: url.trim(), at: new Date().toLocaleString("fr-FR") },
-      ...prev,
-    ]);
-    setUrl("");
-    toast.success("Lien enregistré en local", {
-      description: "En revue simulée. Un modo réel arrivera avec la base.",
-    });
   }
 
   return (
-    <div>
-      <PageHeader
-        kicker="Clippers"
-        title="Le roster de la semaine."
-        description={`Tu es ${currentClipper.handle}. Un compte déclaré, un code ${currentClipper.code}. On lit chaque lien avant de payer — pas après. Les chiffres sont une démo.`}
-        action={
-          <Button variant="outline" onClick={fakeRefresh} disabled={loading}>
-            {loading ? "Chargement…" : "Actualiser"}
-          </Button>
-        }
-      />
+    <div className="mx-auto max-w-[920px]">
+      <p className="mb-2 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
+        CLASSEMENT
+      </p>
+      <h1 className="flex items-center gap-2 text-[28px] font-semibold tracking-tight">
+        <Trophy className="size-6 text-amber-500" />
+        Clippers
+      </h1>
+      <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-neutral-600">
+        Tous les clippers Process, classés par gains, ventes, essais et installs. Le podium change
+        selon le filtre.
+      </p>
 
-      <form
-        onSubmit={submitClip}
-        className="mb-6 grid gap-2 rounded-lg border border-border bg-card p-4 sm:grid-cols-[1fr_auto]"
-      >
-        <div className="space-y-1.5">
-          <Label htmlFor="tiktok-url">Soumettre un clip</Label>
-          <Input
-            id="tiktok-url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://www.tiktok.com/@…/video/…"
-          />
+      {you ? (
+        <div className="mt-5 flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+          <Avatar name={you.name} code={you.code} className="size-10 text-[13px]" />
+          <div>
+            <p className="text-[14px] font-semibold">
+              Tu es n°{you.rank} sur {clippersRoster.length}
+            </p>
+            <p className="text-[12px] text-neutral-500">€0.00 · 0 ventes · 0 essais · 0 installs</p>
+          </div>
         </div>
-        <Button type="submit" className="sm:mt-6">
-          Envoyer
-        </Button>
-        <div className="grid gap-2 sm:col-span-2 sm:grid-cols-2">
-          {submitChecks.map((item) => (
-            <label key={item.id} className="flex items-start gap-2 text-xs leading-relaxed">
-              <Checkbox
-                checked={ready.includes(item.id)}
-                onCheckedChange={() =>
-                  setReady((prev) =>
-                    prev.includes(item.id) ? prev.filter((x) => x !== item.id) : [...prev, item.id]
-                  )
-                }
-              />
-              <span>{item.label}</span>
-            </label>
+      ) : null}
+
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap gap-1.5">
+          {filters.map((f) => (
+            <button
+              key={f}
+              type="button"
+              onClick={() => onFilter(f)}
+              className={cn(
+                "rounded-full px-3 py-1.5 text-[13px] font-medium",
+                filter === f
+                  ? "bg-neutral-900 text-white"
+                  : "border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+              )}
+            >
+              {f}
+            </button>
           ))}
         </div>
-        {subs.length > 0 ? (
-          <p className="text-xs text-muted-foreground sm:col-span-2">
-            Dernier : {subs[0].url} · {subs[0].at}
-          </p>
-        ) : null}
-      </form>
-
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row">
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Chercher un handle ou une niche…"
-          className="sm:max-w-xs"
+          placeholder="Nom ou code..."
+          className="h-9 max-w-xs rounded-lg"
         />
-        <div className="flex flex-wrap gap-1.5">
-          {niches.map((n) => (
-            <Button
-              key={n}
-              size="sm"
-              variant={niche === n ? "default" : "outline"}
-              onClick={() => setNiche(n)}
-            >
-              {n}
-            </Button>
-          ))}
-        </div>
       </div>
 
-      {rows.length === 0 ? (
-        <EmptyState
-          title="Personne dans ce filtre"
-          body="Le roster démo est petit. Élargis le filtre, ou reviens à « Toutes »."
-          action={
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => {
-                setQuery("");
-                setNiche("Toutes");
-              }}
+      <div className="mt-6 grid grid-cols-3 items-end gap-3">
+        {podium.map((p, i) => {
+          const place = i === 1 ? 1 : i === 0 ? 2 : 3;
+          const tones =
+            place === 1
+              ? "border-amber-100 bg-amber-50/70"
+              : place === 2
+                ? "border-neutral-100 bg-neutral-50"
+                : "border-orange-100 bg-orange-50/50";
+          return (
+            <div
+              key={p.code}
+              className={cn(
+                "rounded-2xl border px-3 py-6 text-center",
+                tones,
+                place === 1 && "py-8"
+              )}
             >
-              Tout afficher
-            </Button>
-          }
-        />
-      ) : loading ? (
-        <p className="text-sm text-muted-foreground">Chargement du classement…</p>
-      ) : (
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12">#</TableHead>
-                <TableHead>Clipper</TableHead>
-                <TableHead>Niche</TableHead>
-                <TableHead className="text-right">Vues 7 j</TableHead>
-                <TableHead className="text-right">Clips</TableHead>
-                <TableHead className="text-right">CPM</TableHead>
-                <TableHead>Statut</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.handle} className={"you" in row && row.you ? "bg-muted/40" : undefined}>
-                  <TableCell className="text-muted-foreground">{row.rank}</TableCell>
-                  <TableCell className="font-medium">
-                    {row.handle}
-                    {"you" in row && row.you ? (
-                      <span className="ml-2 text-[11px] text-muted-foreground">toi</span>
-                    ) : null}
-                  </TableCell>
-                  <TableCell>{row.niche}</TableCell>
-                  <TableCell className="text-right">{formatNumber(row.views7d)}</TableCell>
-                  <TableCell className="text-right">{row.clips}</TableCell>
-                  <TableCell className="text-right">{formatEuro(row.cpm)}</TableCell>
-                  <TableCell>
-                    <StatusBadge status={row.status} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              <span
+                className={cn(
+                  "mx-auto mb-2 flex size-5 items-center justify-center rounded-full text-[10px] font-bold text-white",
+                  place === 1 ? "bg-amber-400" : place === 2 ? "bg-neutral-400" : "bg-orange-400"
+                )}
+              >
+                {place}
+              </span>
+              <Avatar name={p.name} code={p.code} className="mx-auto size-14 text-[16px]" />
+              <p className="mt-3 font-semibold">{p.name}</p>
+              <p className="text-[12px] tracking-wide text-neutral-400 uppercase">{p.code}</p>
+              <p className="mt-2 text-[18px] font-semibold">€0.00</p>
+              <p className="text-[11px] text-neutral-400">0 ventes · 0 essais · 0 installs</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <section className="mt-6 overflow-hidden rounded-2xl border border-neutral-200">
+        <div className="flex items-center justify-between px-5 py-3">
+          <p className="text-[14px] font-semibold">Tous les clippers</p>
+          <p className="text-[13px] text-neutral-400">{clippersRoster.length}</p>
         </div>
-      )}
+        {loading ? (
+          <p className="px-5 py-8 text-sm text-neutral-500">Chargement du classement…</p>
+        ) : rows.length === 0 ? (
+          <div className="p-5">
+            <EmptyState
+              title="Personne dans ce filtre"
+              body="Aucun clipper ne correspond à ce nom ou code."
+              action={
+                <button type="button" className="text-sm underline" onClick={() => setQuery("")}>
+                  Vider la recherche
+                </button>
+              }
+            />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-[13px]">
+              <thead className="text-[12px] text-neutral-400">
+                <tr className="border-t border-neutral-100">
+                  <th className="px-4 py-2 font-medium">#</th>
+                  <th className="px-2 py-2 font-medium">Clipper</th>
+                  <th className="px-2 py-2 text-right font-medium">Gains</th>
+                  <th className="px-2 py-2 text-right font-medium">Ventes</th>
+                  <th className="px-2 py-2 text-right font-medium">Essais</th>
+                  <th className="px-2 py-2 text-right font-medium">Installs</th>
+                  <th className="px-4 py-2 text-right font-medium">Visites</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={`${row.rank}-${row.code}`} className="border-t border-neutral-100">
+                    <td className="px-4 py-2.5 text-neutral-400">
+                      {row.rank <= 3 ? (
+                        <span
+                          className={cn(
+                            "inline-flex size-5 items-center justify-center rounded-full text-[10px] font-bold text-white",
+                            row.rank === 1
+                              ? "bg-amber-400"
+                              : row.rank === 2
+                                ? "bg-neutral-400"
+                                : "bg-orange-400"
+                          )}
+                        >
+                          {row.rank}
+                        </span>
+                      ) : (
+                        row.rank
+                      )}
+                    </td>
+                    <td className="px-2 py-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <Avatar name={row.name} code={row.code} />
+                        <div>
+                          <p className="font-semibold text-neutral-900">
+                            {row.name}
+                            {row.you ? (
+                              <span className="ml-2 text-[10px] font-medium tracking-wide text-blue-600 uppercase">
+                                TOI
+                              </span>
+                            ) : null}
+                          </p>
+                          <p className="text-[11px] tracking-wide text-neutral-400 uppercase">
+                            {row.code}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-2 py-2.5 text-right tabular">€0.00</td>
+                    <td className="px-2 py-2.5 text-right tabular text-neutral-500">0</td>
+                    <td className="px-2 py-2.5 text-right tabular text-neutral-500">0</td>
+                    <td className="px-2 py-2.5 text-right tabular text-neutral-500">0</td>
+                    <td className="px-4 py-2.5 text-right tabular text-neutral-500">0</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
     </div>
+  );
+}
+
+function Avatar({
+  name,
+  code,
+  className,
+}: {
+  name: string;
+  code: string;
+  className?: string;
+}) {
+  const colors = clipperColors(code);
+  return (
+    <span
+      className={cn(
+        "inline-flex size-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold",
+        className
+      )}
+      style={{ background: colors.bg, color: colors.fg }}
+    >
+      {clipperInitials(name)}
+    </span>
   );
 }

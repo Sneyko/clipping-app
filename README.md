@@ -1,8 +1,8 @@
 # Process Clipping
 
-Portail clipper francophone pour **Process Deblloat**. On y prépare les TikTok (Overview, Démarrage, SlideshowLab, kit d’assets, format, classement, rituels, Poster US, hygiène de compte, FAQ) avec un rail **Paiements** toujours visible.
+Portail clipper **Process Debloat** (Debloat ton visage). Même chrome que le produit : sidebar PROCESS CLIPPING, Paiements Stripe Connect, Evro, bulle WhatsApp.
 
-Cette version tourne **sans auth, sans base, sans Stripe et sans API TikTok**. Les stats, virements et téléchargements sont des données locales de démonstration.
+Cette version tourne **sans auth, sans base, sans Stripe et sans API TikTok**. Les stats, virements et téléchargements sont locaux.
 
 ## Lancer en local
 
@@ -18,38 +18,24 @@ npm run build
 npm run start
 ```
 
+## Pages
+
+- **Overview** — lien `useprocess.xyz/join/EVRO71`, KPIs à 0, gains €0.00, Stats TikTok bientôt, commissions vides
+- **Démarrage** — guide (produit, 40 % du net, primes vues, comptes, warmup, slideshow, résultats)
+- **SlideshowLab** — mock @mannyprcs + structures Guide 72h / Glow-up / Foods
+- **Process Assets** — logo, screens app, cartes App Store (téléchargement local)
+- **Format** — bibliothèque TikTok + comptes à copier (EvoFace, chud j)
+- **Clippers** — classement 128 clippers, podium, tout à 0
+- **Automatiser** — cadence, pas d’auto-post unofficial
+- **Poster US** — documentation statique uniquement (aucun script VPN exécuté)
+- **Shadowban** / **Questions**
+
 ## Stack
 
 Next.js (App Router) · TypeScript · Tailwind CSS · shadcn/ui.
 
-## Ce qui est livré
-
-- Navigation complète (desktop + mobile), copy française
-- **Démarrage** : checklist + guide (recherche de format, payoff, un seul compte)
-- **SlideshowLab** : squelettes (notif, payoff slide 4, guide), variations, aperçu 9:16, batch de la semaine
-- **Format** : bibliothèque de mécanismes, carnet de recherche, packaging (icône / 3 captures), cadre 9:16, interdits
-- **Process Assets** : footage pack groupé (logo, histoire store, B-roll, angles)
-- **Automatiser** : jobs séparés, batch hebdo, tableau tuer/doubler — pas d’auto-post unofficial
-- **Clippers** : revue avant envoi (CTA, icône, angle, un compte)
-- Poster US **éducatif** : pas de VPN, pas de spoof, pas de ferme, pas de script de contournement
-- Score d’hygiène Shadowban (pas un détecteur magique)
-- Demandes de virement simulées (localStorage)
-
-## Déploiement Vercel
-
-Le CLI Vercel de cet environnement est souvent **déconnecté**. Un déploiement anonyme temporaire :
-
-```bash
-rm -f .vercel/anonymous.json
-npx vercel deploy --temporary --yes
-```
-
-Il expire (~1 h) tant qu’il n’est pas réclamé. Pour un projet durable : `npx vercel login` puis `npx vercel --yes --prod`.
-
 ## Plus tard
 
-- Compte utilisateur / auth
-- Base de données
-- Stripe (vrais virements)
-- API TikTok (stats, publication)
-- Stockage CDN des assets binaires
+- Auth / base
+- Vrais virements Stripe Connect
+- API TikTok (stats)

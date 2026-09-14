@@ -1,153 +1,90 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { toast } from "sonner";
+import { useState } from "react";
+import Image from "next/image";
 import { Download } from "lucide-react";
-import { AssetMock } from "@/components/assets/asset-mock";
-import { EmptyState } from "@/components/layout/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { assets } from "@/lib/data";
+import { ProcessMark } from "@/components/brand/marks";
+import { processAssets } from "@/lib/data";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
-const kinds = ["Tous", ...Array.from(new Set(assets.map((a) => a.kind)))];
-const groups = Array.from(new Set(assets.map((a) => a.group)));
+export default function ProcessAssetsPage() {
+  const [downloading, setDownloading] = useState<string | null>(null);
 
-export default function AssetsPage() {
-  const [query, setQuery] = useState("");
-  const [kind, setKind] = useState("Tous");
-
-  const filtered = useMemo(() => {
-    return assets.filter((asset) => {
-      const matchKind = kind === "Tous" || asset.kind === kind;
-      const q = query.trim().toLowerCase();
-      const matchQ =
-        !q ||
-        asset.title.toLowerCase().includes(q) ||
-        asset.usage.toLowerCase().includes(q) ||
-        asset.group.toLowerCase().includes(q);
-      return matchKind && matchQ;
-    });
-  }, [query, kind]);
-
-  function download(title: string) {
-    const blob = new Blob(
-      [
-        `Process Assets — ${title}\n\nFichier de démonstration. Le kit réel (MP4 / PNG HD) sera servi plus tard depuis le stockage.\nUsage : ${assets.find((a) => a.title === title)?.usage ?? ""}\n`,
-      ],
-      { type: "text/plain;charset=utf-8" }
-    );
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${title.replaceAll(" ", "-").toLowerCase()}-demo.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success("Téléchargement simulé", {
-      description: "Placeholder texte. Pas encore de CDN.",
-    });
+  async function download(src: string, title: string, id: string) {
+    setDownloading(id);
+    try {
+      const res = await fetch(src);
+      if (!res.ok) throw new Error("missing");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = src.split("/").pop() ?? "asset.png";
+      a.click();
+      URL.revokeObjectURL(url);
+      toast.success(`Téléchargé : ${title}`);
+    } catch {
+      toast.error("Fichier indisponible");
+    } finally {
+      setDownloading(null);
+    }
   }
 
   return (
-    <div>
-      <PageHeader
-        kicker="Process Assets"
-        title="Le footage pack. Tu n’as plus à demander."
-        description="Icône lisible, trois captures qui racontent, carte store, B-roll, angles — pas des scripts. Tes propres plans restent les bienvenus. Les visuels d’autres clippers, non."
-      />
+    <div className="mx-auto max-w-[920px]">
+      <p className="mb-2 flex items-center gap-1.5 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
+        <ProcessMark />
+        PROCESS
+      </p>
+      <h1 className="text-[28px] font-semibold tracking-tight">Process Assets</h1>
+      <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-neutral-600">
+        Fichiers officiels à coller dans tes slideshows : logo, screens app, carte App Store.
+        Télécharge, n’écrase pas le visuel.
+      </p>
 
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Input
-          id="asset-search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Filtrer un asset…"
-          className="sm:max-w-xs"
-        />
-        <div className="flex flex-wrap gap-1.5">
-          {kinds.map((k) => (
-            <Button
-              key={k}
-              size="sm"
-              variant={kind === k ? "default" : "outline"}
-              onClick={() => setKind(k)}
-            >
-              {k}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {filtered.length === 0 ? (
-        <EmptyState
-          title="Aucun asset"
-          body="Ce filtre ne correspond à rien dans le kit. Efface la recherche ou change de type."
-          action={
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => {
-                setQuery("");
-                setKind("Tous");
-              }}
-            >
-              Réinitialiser
-            </Button>
-          }
-        />
-      ) : (
-        <div className="space-y-10">
-          {groups.map((group) => {
-            const items = filtered.filter((a) => a.group === group);
-            if (!items.length) return null;
-            return (
-              <section key={group}>
-                <h2 className="mb-3 text-[11px] font-medium tracking-[0.18em] text-muted-foreground uppercase">
-                  {group}
-                </h2>
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                  {items.map((asset) => (
-                    <Card key={asset.id} size="sm" className="overflow-hidden pt-0">
-                      <AssetMock kind={asset.mock} className="max-h-44 rounded-none border-0 border-b" />
-                      <CardHeader>
-                        <div className="mb-2 flex items-center justify-between">
-                          <Badge variant="outline">{asset.kind}</Badge>
-                          <span className="text-[11px] text-muted-foreground">{asset.weight}</span>
-                        </div>
-                        <CardTitle>{asset.title}</CardTitle>
-                        <CardDescription>{asset.format}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="text-xs leading-relaxed text-muted-foreground">
-                        {asset.usage}
-                      </CardContent>
-                      <CardFooter>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="w-full"
-                          onClick={() => download(asset.title)}
-                        >
-                          <Download data-icon="inline-start" />
-                          Télécharger
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
+      {processAssets.map((group) => (
+        <section key={group.group} className="mt-10">
+          <p className="mb-3 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
+            {group.group}
+          </p>
+          <div className="flex flex-wrap gap-4">
+            {group.items.map((item) => (
+              <article
+                key={item.id}
+                className={cn(
+                  "overflow-hidden rounded-2xl border border-neutral-200 bg-white",
+                  item.wide ? "w-full max-w-[340px] sm:max-w-[380px]" : "w-[160px] sm:w-[176px]"
+                )}
+              >
+                <div className={cn("bg-neutral-50", item.wide ? "p-3" : "p-2")}>
+                  <Image
+                    src={item.src}
+                    alt={item.title}
+                    width={item.wide ? 750 : 336}
+                    height={item.wide ? 374 : 688}
+                    className={cn(
+                      "w-full rounded-xl object-cover",
+                      item.wide ? "h-[140px] object-contain bg-white" : "h-[176px] object-cover object-top"
+                    )}
+                  />
                 </div>
-              </section>
-            );
-          })}
-        </div>
-      )}
+                <div className="px-3 pt-2 pb-3">
+                  <p className="text-[13px] font-medium">{item.title}</p>
+                  <button
+                    type="button"
+                    onClick={() => download(item.src, item.title, item.id)}
+                    className="mt-2 flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-neutral-900 text-[13px] font-medium text-white hover:bg-neutral-800"
+                  >
+                    <Download className="size-3.5" />
+                    {downloading === item.id ? "…" : "Télécharger"}
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }

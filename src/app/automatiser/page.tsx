@@ -1,211 +1,90 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { toast } from "sonner";
-import { PageHeader } from "@/components/layout/page-header";
+import { ArticleP, ArticleTitle, GrayNote, H2, Ol, Ul } from "@/components/layout/article";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import {
-  automations,
-  defaultKillBoard,
-  storageKeys,
-} from "@/lib/data";
-import { useLocalState } from "@/hooks/use-local-state";
-import { formatNumber } from "@/lib/format";
-import { cn } from "@/lib/utils";
-
-type KillRow = {
-  id: string;
-  name: string;
-  views: number;
-  decision: "tester" | "doubler" | "tuer";
-};
-
-const decisionLabel = {
-  tester: "Tester",
-  doubler: "Doubler",
-  tuer: "Tuer",
-} as const;
 
 export default function AutomatiserPage() {
-  const [enabled, setEnabled] = useLocalState<Record<string, boolean>>(
-    storageKeys.automations,
-    { cadence: true, capcut: true, batch: true, recherche: true, split: true, kill: true }
-  );
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [board, setBoard] = useLocalState<KillRow[]>(storageKeys.killBoard, defaultKillBoard);
-  const [newName, setNewName] = useState("");
-  const [newViews, setNewViews] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  function toggle(id: string, deferred?: boolean) {
-    if (deferred) {
-      setApiError(
-        "File d’attente TikTok : OAuth officiel non branché. On n’activera jamais un auto-post unofficial, ni une ferme."
-      );
-      toast.error("API TikTok absente");
-      return;
-    }
-    setApiError(null);
-    setEnabled((prev) => ({ ...prev, [id]: !prev[id] }));
-  }
-
-  function addRow(e: React.FormEvent) {
-    e.preventDefault();
-    const views = Number(newViews.replace(/\s/g, "").replace(",", "."));
-    if (!newName.trim() || Number.isNaN(views)) return;
-    const decision: KillRow["decision"] =
-      views < 3000 ? "tuer" : views >= 10000 ? "doubler" : "tester";
-    setBoard((prev) => [
-      { id: `k-${Date.now()}`, name: newName.trim(), views, decision },
-      ...prev,
-    ]);
-    setNewName("");
-    setNewViews("");
+  async function connectApi() {
+    setLoading(true);
+    setError(null);
+    await new Promise((r) => setTimeout(r, 600));
+    setLoading(false);
+    setError(
+      "File d’attente TikTok : OAuth officiel non branché. On n’activera jamais un auto-post unofficial."
+    );
+    toast.error("API TikTok absente");
   }
 
   return (
-    <div>
-      <PageHeader
-        kicker="Automatiser"
-        title="Des jobs. Pas une ferme."
-        description="Veille, batch, cadence, tuer/doubler : oui. Scripts de spam, login TikTok collé ici, VPN, devices farms : non. L’API officielle viendra plus tard."
-      />
+    <div className="mx-auto max-w-[640px]">
+      <ArticleTitle>Automatiser</ArticleTitle>
+      <ArticleP>
+        Le clipping, c’est du volume sur une structure — pas un robot qui poste à ta place. Tu
+        batches dans SlideshowLab, tu postes à la main en Photo Mode, tu rentres chaque jour dans
+        le compte.
+      </ArticleP>
 
-      {apiError ? (
-        <Alert variant="destructive" className="mb-6">
-          <AlertTitle>Automatisation refusée</AlertTitle>
+      {error ? (
+        <Alert variant="destructive" className="mt-5">
+          <AlertTitle>Connexion impossible</AlertTitle>
           <AlertDescription>
-            {apiError}{" "}
-            <button type="button" className="underline" onClick={() => setApiError(null)}>
-              Fermer
+            {error}{" "}
+            <button type="button" className="underline" onClick={connectApi}>
+              Réessayer
             </button>
           </AlertDescription>
         </Alert>
       ) : null}
 
-      <div className="grid gap-3 lg:grid-cols-2">
-        {automations.map((item) => (
-          <Card key={item.id}>
-            <CardHeader className="border-b">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <CardTitle>{item.title}</CardTitle>
-                  <CardDescription className="mt-1">{item.summary}</CardDescription>
-                </div>
-                <Switch
-                  checked={Boolean(enabled[item.id])}
-                  onCheckedChange={() => toggle(item.id, item.deferred)}
-                  aria-label={item.title}
-                />
-              </div>
-              <Badge variant="outline" className="w-fit">
-                {item.kind}
-                {item.deferred ? " · plus tard" : ""}
-              </Badge>
-            </CardHeader>
-            <CardContent>
-              <ol className="list-decimal space-y-1.5 pl-4 text-sm leading-relaxed text-muted-foreground">
-                {item.steps.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <H2>Ce qui tourne tout seul</H2>
+      <Ul
+        items={[
+          "Le lien useprocess.xyz/join/… dans le commentaire épinglé.",
+          "Les 40 % du net, chaque semaine, tant que l’abo reste.",
+          "Les primes vues qui s’additionnent sur le compte.",
+        ]}
+      />
 
-      <section className="mt-10">
-        <h2 className="font-heading text-xl tracking-tight">Tableau tuer / doubler</h2>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Après ~48 h : tu logs les vues. Moins de 3 k, le format meurt. Plus de 10–15 k, tu déclines. Lien à plat = tu bouges le CTA, tu ne relances pas le même.
+      <H2>Ce que tu fais à la main</H2>
+      <Ol
+        items={[
+          "Warm up 2 jours, puis 1 post / jour, puis 4 / jour par compte.",
+          "Varie Guide 72h, Glow-up, Foods.",
+          "Like, commente, sondage, scrolle — chaque jour, dans le compte.",
+          "Dès qu’un post passe 40k : même hook, nouvel angle, nouvelles photos.",
+        ]}
+      />
+
+      <GrayNote className="mt-6">
+        Poster via API, ce n’est pas le problème. Le compte que tu ne visites pas se fait griller.
+        Pas de ferme de téléphones, pas d’auto-post unofficial sur ce portail.
+      </GrayNote>
+
+      <div className="mt-6 rounded-2xl border border-neutral-200 px-5 py-8 text-center">
+        <p className="font-semibold">File TikTok — bientôt</p>
+        <p className="mt-1 text-sm text-neutral-500">
+          {loading ? "Connexion…" : "Aucune publication en file. OAuth officiel plus tard."}
         </p>
-
-        <form onSubmit={addRow} className="mt-4 mb-4 flex flex-col gap-2 sm:flex-row">
-          <Input
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            placeholder="Nom du format"
-            className="sm:max-w-xs"
-          />
-          <Input
-            value={newViews}
-            onChange={(e) => setNewViews(e.target.value)}
-            placeholder="Vues à 48 h"
-            inputMode="numeric"
-            className="sm:max-w-[140px]"
-          />
-          <Button type="submit" variant="outline">
-            Logger
-          </Button>
-        </form>
-
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table className="w-full text-sm">
-            <thead className="border-b border-border text-left text-xs text-muted-foreground">
-              <tr>
-                <th className="px-4 py-2.5 font-medium">Format</th>
-                <th className="px-4 py-2.5 font-medium text-right">Vues</th>
-                <th className="px-4 py-2.5 font-medium">Décision</th>
-              </tr>
-            </thead>
-            <tbody>
-              {board.map((row) => (
-                <tr key={row.id} className="border-b border-foreground/6 last:border-0">
-                  <td className="px-4 py-2.5">{row.name}</td>
-                  <td className="px-4 py-2.5 text-right tabular-nums">{formatNumber(row.views)}</td>
-                  <td className="px-4 py-2.5">
-                    <div className="flex flex-wrap gap-1">
-                      {(["tester", "doubler", "tuer"] as const).map((d) => (
-                        <button
-                          key={d}
-                          type="button"
-                          onClick={() =>
-                            setBoard((prev) =>
-                              prev.map((r) => (r.id === row.id ? { ...r, decision: d } : r))
-                            )
-                          }
-                          className={cn(
-                            "rounded-full px-2 py-0.5 text-[11px]",
-                            row.decision === d
-                              ? d === "tuer"
-                                ? "bg-destructive/15 text-destructive"
-                                : "bg-foreground text-background"
-                              : "bg-muted text-muted-foreground"
-                          )}
-                        >
-                          {decisionLabel[d]}
-                        </button>
-                      ))}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <div className="mt-6">
-        <Button
-          variant="outline"
-          onClick={() => {
-            setEnabled({ cadence: true, capcut: true, batch: true, recherche: true, kill: true, split: true });
-            toast.success("Rituels recommandés réactivés");
-          }}
-        >
-          Revenir aux rituels recommandés
+        <Button className="mt-4" variant="outline" onClick={connectApi} disabled={loading}>
+          Connecter TikTok
         </Button>
       </div>
+
+      <p className="mt-6 flex gap-4">
+        <Link href="/slideshow-lab" className="text-[14px] font-semibold underline-offset-4 hover:underline">
+          Ouvrir SlideshowLab
+        </Link>
+        <Link href="/format" className="text-[14px] font-semibold underline-offset-4 hover:underline">
+          Ouvrir Format
+        </Link>
+      </p>
     </div>
   );
 }

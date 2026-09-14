@@ -2,13 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { EmptyState } from "@/components/layout/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ArticleTitle } from "@/components/layout/article";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { faqs } from "@/lib/data";
@@ -25,24 +19,26 @@ export default function QuestionsPage() {
   }, [query]);
 
   return (
-    <div>
-      <PageHeader
-        kicker="Questions"
-        title="Les questions qu’on pose vraiment."
-        description="Paiement, US, multi-compte, CTA, API. Si ça n’est pas ici, c’est probablement « pas encore » — Stripe et TikTok viendront plus tard."
-      />
-
+    <div className="mx-auto max-w-[640px] pb-16">
+      <p className="text-[11px] font-medium tracking-[0.16em] text-neutral-400 uppercase">
+        UTILES
+      </p>
+      <ArticleTitle>Questions</ArticleTitle>
+      <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">
+        Paiement, lien, comptes, shadowban, US. Si ça n’est pas ici, c’est probablement « pas
+        encore » — Stripe et TikTok viendront plus tard.
+      </p>
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Chercher dans la FAQ…"
-        className="mb-6 max-w-md"
+        className="mt-5 max-w-md"
       />
-
       {items.length === 0 ? (
         <EmptyState
+          className="mt-6"
           title="Rien sur ce mot"
-          body="Essaie « CPM », « VPN », « CTA », « commentaires » ou « virement »."
+          body="Essaie « 40 % », « VPN », « warmup » ou « Stripe »."
           action={
             <Button size="sm" variant="outline" onClick={() => setQuery("")}>
               Vider la recherche
@@ -50,16 +46,14 @@ export default function QuestionsPage() {
           }
         />
       ) : (
-        <Accordion type="single" collapsible className="rounded-lg border border-border px-4">
-          {items.map((item, index) => (
-            <AccordionItem key={item.q} value={`q-${index}`}>
-              <AccordionTrigger className="text-left">{item.q}</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground leading-relaxed">
-                {item.a}
-              </AccordionContent>
-            </AccordionItem>
+        <ul className="mt-8 space-y-8">
+          {items.map((f) => (
+            <li key={f.q}>
+              <h2 className="text-[16px] font-semibold tracking-tight">{f.q}</h2>
+              <p className="mt-2 text-[14.5px] leading-relaxed text-neutral-600">{f.a}</p>
+            </li>
           ))}
-        </Accordion>
+        </ul>
       )}
     </div>
   );
