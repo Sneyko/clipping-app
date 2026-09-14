@@ -85,7 +85,7 @@ export default function FormatPage() {
         {library.map((card) => (
           <article key={card.id} className="relative overflow-hidden rounded-2xl">
             <Image src={card.src} alt={card.title} width={465} height={580} className="aspect-[3/4] w-full object-cover" />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-3 pt-16 pb-3">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pt-8 pb-2.5">
               <p className="text-[14px] leading-tight font-semibold text-white">{card.title}</p>
               <p className="mt-1 text-[13px] font-medium text-white/90">{card.views}</p>
             </div>
