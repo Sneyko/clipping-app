@@ -14,7 +14,7 @@ export default function SlideshowLabPage() {
   const current = labStructures.find((s) => s.id === tab) ?? labStructures[0];
 
   return (
-    <div className="mx-auto max-w-[920px]">
+    <div className="mx-auto max-w-[1080px]">
       <p className="mb-2 flex items-center gap-1.5 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
         <Layers className="size-3.5" />
         LAB

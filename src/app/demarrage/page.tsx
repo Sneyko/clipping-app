@@ -22,12 +22,12 @@ export default function DemarragePage() {
 
   return (
     <div className="mx-auto grid max-w-[1040px] gap-10 lg:grid-cols-[200px_minmax(0,1fr)]">
-      <aside className="lg:sticky lg:top-8 lg:self-start">
-        <nav className="flex flex-col gap-0.5">
+      <nav data-testid="demarrage-toc" className="flex flex-col gap-0.5 lg:sticky lg:top-8 lg:self-start">
           {demarrageNav.map((item) => (
             <button
               key={item.id}
               type="button"
+              data-demarrage={item.id}
               onClick={() => setSection(item.id)}
               className={cn(
                 "rounded-xl px-3 py-2 text-left text-[13.5px] text-neutral-500 transition-colors",
@@ -39,8 +39,7 @@ export default function DemarragePage() {
               {item.label}
             </button>
           ))}
-        </nav>
-      </aside>
+      </nav>
       <article className="max-w-[640px] pb-16">
         {section === "produit" ? <Produit /> : null}
         {section === "paiement" ? <Paiement /> : null}

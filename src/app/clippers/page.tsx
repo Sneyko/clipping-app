@@ -33,7 +33,7 @@ export default function ClippersPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[920px]">
+    <div className="mx-auto max-w-[1080px]">
       <p className="mb-2 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
         CLASSEMENT
       </p>
@@ -110,7 +110,7 @@ export default function ClippersPage() {
               >
                 {place}
               </span>
-              <Avatar name={p.name} code={p.code} className="mx-auto size-14 text-[16px]" />
+              <Avatar name={p.name} code={p.code} rank={place} className="mx-auto size-14 text-[16px]" />
               <p className="mt-3 font-semibold">{p.name}</p>
               <p className="text-[12px] tracking-wide text-neutral-400 uppercase">{p.code}</p>
               <p className="mt-2 text-[18px] font-semibold">€0.00</p>
@@ -176,7 +176,7 @@ export default function ClippersPage() {
                     </td>
                     <td className="px-2 py-2.5">
                       <div className="flex items-center gap-2.5">
-                        <Avatar name={row.name} code={row.code} />
+                        <Avatar name={row.name} code={row.code} rank={row.rank} />
                         <div>
                           <p className="font-semibold text-neutral-900">
                             {row.name}
@@ -211,13 +211,22 @@ export default function ClippersPage() {
 function Avatar({
   name,
   code,
+  rank,
   className,
 }: {
   name: string;
   code: string;
+  rank?: number;
   className?: string;
 }) {
-  const colors = clipperColors(code);
+  const colors =
+    rank === 1
+      ? { bg: "#FDE68A", fg: "#B45309" }
+      : rank === 2
+        ? { bg: "#E5E7EB", fg: "#4B5563" }
+        : rank === 3
+          ? { bg: "#FED7AA", fg: "#C2410C" }
+          : clipperColors(code);
   return (
     <span
       className={cn(

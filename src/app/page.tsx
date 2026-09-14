@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   CircleHelp,
-  Copy,
   Lock,
   MousePointer2,
   Play,
@@ -60,7 +59,7 @@ export default function OverviewPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[920px]">
+    <div className="mx-auto max-w-[1080px]">
       <div className="mb-5 flex items-center gap-2">
         <h1 className="text-[22px] font-semibold tracking-tight">Overview</h1>
         <CircleHelp className="size-4 text-neutral-300" />
@@ -81,10 +80,9 @@ export default function OverviewPage() {
           </div>
           <div className="flex gap-2">
             <Button
-              className="h-8 rounded-lg bg-neutral-900 px-3 text-[13px] text-white hover:bg-neutral-800"
+              className="h-8 rounded-lg bg-neutral-900 px-3.5 text-[13px] text-white hover:bg-neutral-800"
               onClick={copyLink}
             >
-              <Copy data-icon="inline-start" className="size-3.5" />
               {copied ? "Copié" : "Copier"}
             </Button>
             <Button

@@ -32,7 +32,7 @@ export default function ProcessAssetsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[920px]">
+    <div className="mx-auto max-w-[1080px]">
       <p className="mb-2 flex items-center gap-1.5 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
         <ProcessMark />
         PROCESS
@@ -54,7 +54,7 @@ export default function ProcessAssetsPage() {
                 key={item.id}
                 className={cn(
                   "overflow-hidden rounded-2xl border border-neutral-200 bg-white",
-                  item.wide ? "w-full max-w-[340px] sm:max-w-[380px]" : "w-[160px] sm:w-[176px]"
+                  item.wide ? "w-full max-w-[360px] sm:max-w-[400px]" : "w-[148px] sm:w-[158px]"
                 )}
               >
                 <div className={cn("bg-neutral-50", item.wide ? "p-3" : "p-2")}>

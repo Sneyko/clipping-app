@@ -24,6 +24,12 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const [connecting, setConnecting] = useState(false);
   const [connectError, setConnectError] = useState<string | null>(null);
 
+  function handleNav() {
+    setConnectOpen(false);
+    setConnectError(null);
+    onNavigate?.();
+  }
+
   async function mockConnect() {
     setConnecting(true);
     setConnectError(null);
@@ -40,7 +46,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       <div className="px-5 pt-5 pb-4">
         <Link
           href="/"
-          onClick={onNavigate}
+          onClick={handleNav}
           className="text-[11px] font-bold tracking-[0.06em] text-neutral-900"
         >
           PROCESS CLIPPING
@@ -65,7 +71,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={onNavigate}
+                    onClick={handleNav}
                     className={cn(
                       "flex items-center gap-2.5 rounded-xl px-3 py-[7px] text-[13.5px] transition-colors",
                       active
@@ -102,18 +108,14 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             </span>
             <ChevronRight className="size-4 text-neutral-400" />
           </button>
-          <div className="mt-3 grid grid-cols-2 gap-3 text-[12px]">
+          <div className="mt-3 space-y-2 text-[12px]">
             <div>
-              <p className="text-neutral-400">À venir</p>
-              <p className="mt-0.5 text-[15px] font-semibold tracking-tight text-neutral-900">
-                €0.00
-              </p>
+              <p className="text-[11px] text-neutral-400">À venir</p>
+              <p className="text-[15px] font-semibold tracking-tight text-neutral-900">€0.00</p>
             </div>
             <div>
-              <p className="text-neutral-400">Reçus</p>
-              <p className="mt-0.5 text-[15px] font-semibold tracking-tight text-neutral-900">
-                €0.00
-              </p>
+              <p className="text-[11px] text-neutral-400">Reçus</p>
+              <p className="text-[15px] font-semibold tracking-tight text-neutral-900">€0.00</p>
             </div>
           </div>
           <Button

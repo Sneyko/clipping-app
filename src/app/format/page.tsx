@@ -53,7 +53,7 @@ export default function FormatPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[920px]">
+    <div className="mx-auto max-w-[1080px]">
       <p className="mb-2 text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
         BIBLIOTHÈQUE
       </p>
@@ -84,8 +84,8 @@ export default function FormatPage() {
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {library.map((card) => (
           <article key={card.id} className="relative overflow-hidden rounded-2xl">
-            <Image src={card.src} alt={card.title} width={465} height={412} className="aspect-[4/5] w-full object-cover" />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-3 pt-10 pb-3">
+            <Image src={card.src} alt={card.title} width={465} height={580} className="aspect-[3/4] w-full object-cover" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-3 pt-16 pb-3">
               <p className="text-[14px] leading-tight font-semibold text-white">{card.title}</p>
               <p className="mt-1 text-[13px] font-medium text-white/90">{card.views}</p>
             </div>
