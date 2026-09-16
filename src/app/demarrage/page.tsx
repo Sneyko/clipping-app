@@ -14,7 +14,13 @@ import {
   PercentCard,
   Ul,
 } from "@/components/layout/article";
-import { joinUrl, officialFormats, program, viewBonuses, bonusNotes, demarrageNav } from "@/lib/data";
+import {
+  commissionTiers,
+  joinUrl,
+  officialFormats,
+  program,
+  demarrageNav,
+} from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export default function DemarragePage() {
@@ -23,29 +29,29 @@ export default function DemarragePage() {
   return (
     <div className="mx-auto grid max-w-[1040px] gap-10 lg:grid-cols-[200px_minmax(0,1fr)]">
       <nav data-testid="demarrage-toc" className="flex flex-col gap-0.5 lg:sticky lg:top-8 lg:self-start">
-          {demarrageNav.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              data-demarrage={item.id}
-              onClick={() => setSection(item.id)}
-              className={cn(
-                "rounded-xl px-3 py-2 text-left text-[13.5px] text-neutral-500 transition-colors",
-                section === item.id
-                  ? "bg-neutral-100 font-medium text-neutral-900"
-                  : "hover:bg-neutral-50 hover:text-neutral-800"
-              )}
-            >
-              {item.label}
-            </button>
-          ))}
+        {demarrageNav.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            data-demarrage={item.id}
+            onClick={() => setSection(item.id)}
+            className={cn(
+              "rounded-xl px-3 py-2 text-left text-[13.5px] text-neutral-500 transition-colors",
+              section === item.id
+                ? "bg-neutral-100 font-medium text-neutral-900"
+                : "hover:bg-neutral-50 hover:text-neutral-800"
+            )}
+          >
+            {item.label}
+          </button>
+        ))}
       </nav>
       <article className="max-w-[640px] pb-16">
         {section === "produit" ? <Produit /> : null}
         {section === "paiement" ? <Paiement /> : null}
         {section === "vendre" ? <Vendre /> : null}
         {section === "comptes" ? <Comptes /> : null}
-        {section === "warmup" ? <Warmup /> : null}
+        {section === "regles" ? <ReglesResume /> : null}
         {section === "format" ? <FormatSlideshow /> : null}
         {section === "resultats" ? <Resultats /> : null}
       </article>
@@ -58,73 +64,46 @@ function Produit() {
     <div>
       <ArticleTitle>Le produit qu’on vend</ArticleTitle>
       <ArticleP>
-        Process Debloat. L’app s’appelle Debloat ton visage : scan, score, recettes, App Store.
-        Tu ne vends pas un coaching filmé. Tu vends l’app. Tes slideshows amènent au lien{" "}
-        {joinUrl()} — code {program.inviteCode}.
+        Aven. Tracker iPhone de musculation : séances guidées, rangs musculaires, records, XP. Tu
+        ne vends pas un coaching filmé. Tu amènes gymtok vers Aven. Lien tracké {joinUrl()} — code{" "}
+        {program.inviteCode}. Handle {program.handle}.
       </ArticleP>
       <ArticleP>
-        Le viewer comprend en une seconde ce qu’il gagne : un visage moins gonflé, un glow-up, un
-        protocole 72h. L’app entre en payoff — scan 2×2, carte App Store — jamais en sujet de la
-        slide 1.
+        Le viewer comprend en une seconde ce qu’il gagne : un rang lisible, le repos sur l’écran
+        verrouillé, une carte de séance 9:16. L’app entre en payoff — jamais en sujet de la slide 1.
+        Pas de transformation promise, pas de claim santé.
       </ArticleP>
       <div className="mt-6 grid grid-cols-3 gap-2">
         {[
-          ["/assets/screen-home.png", "Home"],
-          ["/assets/screen-scan-clair.png", "Scan"],
-          ["/assets/store-card.png", "App Store"],
+          ["/demarrage/rangs-hook.png", "Rangs"],
+          ["/demarrage/live-lock.png", "Live Activity"],
+          ["/demarrage/carte-card.png", "Carte 9:16"],
         ].map(([src, alt]) => (
           <div key={src} className="overflow-hidden rounded-xl border border-neutral-100">
-            <Image src={src} alt={alt} width={280} height={500} className="h-44 w-full object-cover object-top" />
+            <Image
+              src={src}
+              alt={alt}
+              width={280}
+              height={500}
+              className="h-44 w-full object-cover object-top"
+            />
           </div>
         ))}
       </div>
       <GrayNote className="mt-6">
-        Fichiers officiels (logo, screens, carte App Store) : Process Assets. Structures : SlideshowLab.
-        Exemples TikTok : Format.
+        Kit HD pas encore produit — les visuels ici sont des placeholders. Icône officielle dans
+        Aven Assets. Structures : SlideshowLab. Angles : Format. Vitrine live :{" "}
+        {program.joinHost}. Fiche App Store hors ligne.
       </GrayNote>
       <p className="mt-5">
-        <Link href="/process-assets" className="text-[14px] font-semibold text-neutral-900 underline-offset-4 hover:underline">
-          Ouvrir Process Assets
+        <Link
+          href="/aven-assets"
+          className="text-[14px] font-semibold text-neutral-900 underline-offset-4 hover:underline"
+        >
+          Ouvrir Aven Assets
         </Link>
       </p>
     </div>
-  );
-}
-
-function BonusList() {
-  return (
-    <>
-      <p className="mt-8 text-[15px] leading-[1.65] text-neutral-700">
-        Les vues de toutes les vidéos du compte s’additionnent — ça avance plus vite, pas besoin
-        d’une seule vidéo monstre.
-      </p>
-      <div className="mt-5 space-y-3">
-        {viewBonuses.map((row) => (
-          <div
-            key={row.views}
-            className="flex items-center gap-4 rounded-2xl border border-neutral-100 bg-white px-5 py-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-          >
-            <div className="w-16 shrink-0">
-              <p className="text-[26px] leading-none font-semibold tracking-tight">{row.views}</p>
-              <p className="text-[13px] font-medium text-[#3B82F6]">vues</p>
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="border-t border-dashed border-[#93C5FD]" />
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <p className="text-[18px] font-semibold tracking-tight">{row.reward}</p>
-                {row.extra ? (
-                  <p className="text-[11px] font-medium text-[#3B82F6]">{row.extra}</p>
-                ) : null}
-              </div>
-              <Image src={row.image} alt="" width={56} height={48} className="h-12 w-14 object-contain object-right" />
-            </div>
-          </div>
-        ))}
-      </div>
-      <Ul items={[...bonusNotes]} />
-    </>
   );
 }
 
@@ -133,20 +112,44 @@ function Paiement() {
     <div>
       <ArticleTitle>Combien vous êtes payé</ArticleTitle>
       <ArticleP>
-        Tu es payé 40 % du net sur chaque vente, à vie, tant que l’abonnement reste actif. Pas de
-        plafond. Les virements passent par Stripe, vers ton compte. Les commissions sont retenues 30
-        jours, puis disponibles au payout.
+        40 % du net Aven (après commission Apple) sur le <strong>premier paiement</strong> de
+        chaque abonnement Aven Pro attribué à ton code. Pas de récurrence en v1. Pas d’achat de
+        vues. Pas de forfait. Rien n’est garanti : ça dépend des ventes attribuées.
       </ArticleP>
       <GrayNote className="mt-5">
-        Chaque abo que tu génères te rapporte chaque semaine, automatiquement, tant qu’il ne se
-        désabonne pas. Tu scales avec le volume — pas avec une seule vidéo.
+        Aven Pro : 2,99 €/mois · 26,99 €/an · 79,99 € à vie. Le prix vit sur la fiche App Store —
+        pas dans tes clips. Paiement clipper : à partir de 50 € cumulés, mensuel, virement ou
+        PayPal, justificatif requis.
       </GrayNote>
-      <H2>En plus des 40 %</H2>
+      <H2>Indicatif, après Apple</H2>
       <PercentCard />
-      <BonusList />
+      <div className="mt-5 overflow-hidden rounded-2xl border border-neutral-100">
+        <table className="w-full text-left text-[14px]">
+          <thead className="text-[12px] text-neutral-400">
+            <tr className="border-b border-neutral-100">
+              <th className="px-4 py-2 font-medium">Offre</th>
+              <th className="px-4 py-2 font-medium">Prix</th>
+              <th className="px-4 py-2 text-right font-medium">≈ commission</th>
+            </tr>
+          </thead>
+          <tbody>
+            {commissionTiers.map((row) => (
+              <tr key={row.plan} className="border-t border-neutral-100">
+                <td className="px-4 py-2.5 font-medium">{row.plan}</td>
+                <td className="px-4 py-2.5 text-neutral-600">{row.price}</td>
+                <td className="px-4 py-2.5 text-right tabular">{row.cut}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-3 text-[13px] leading-relaxed text-neutral-500">
+        Net = après commission Apple (15 % Small Business Program, sinon 30 %). Ces montants sont
+        indicatifs. Pas un revenu promis.
+      </p>
       <H2>Ton lien</H2>
       <a
-        href={`https://${joinUrl()}`}
+        href={program.vitrineUrl}
         target="_blank"
         rel="noreferrer"
         className="mt-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1.5 text-[13px] font-medium text-neutral-800"
@@ -154,6 +157,9 @@ function Paiement() {
         {joinUrl()}
         <ExternalLink className="size-3.5" />
       </a>
+      <p className="mt-2 text-[13px] text-neutral-500">
+        Vitrine live. Fiche App Store id {program.appStoreId} : pas encore publiée.
+      </p>
     </div>
   );
 }
@@ -162,16 +168,16 @@ function Vendre() {
   return (
     <div>
       <ArticleTitle>Comment on vend</ArticleTitle>
-      <H2>Clipping</H2>
+      <H2>Clipping gymtok</H2>
       <ArticleP>
-        La réponse, c’est le clipping. Ça consiste à automatiser des slideshows TikTok : tu copies
-        une structure qui convertit — pas une vidéo 1:1 — tu postes en volume, ton lien clipper va
-        dans la bio et le commentaire épinglé. Pas besoin de te filmer. Les slideshows se montent,
-        se dupliquent, se postent.
+        Des vidéos courtes TikTok autour d’Aven, à partir du kit + tes propres images. Slideshow
+        Photo Mode accepté. Hook en 1 seconde, une promesse par post, caption = 1 ligne + hashtags,
+        CTA vers le lien — pas un script d’ads. L’authenticité gagne : vraies séances, vraie salle,
+        ta voix.
       </ArticleP>
       <GrayNote className="mt-5">
-        SlideshowLab pour monter. Format pour copier les exemples qui marchent. C’est ça, vendre
-        Process.
+        SlideshowLab pour monter. Format pour les angles. Publication des clips à partir du
+        lancement App Store — pas avant, pas avec un lien store inventé.
       </GrayNote>
       <p className="mt-4">
         <Link href="/slideshow-lab" className="text-[14px] font-semibold underline-offset-4 hover:underline">
@@ -181,59 +187,47 @@ function Vendre() {
       <H2>Un bon clipper sait :</H2>
       <Ul
         items={[
-          "Ne pas être shadowban.",
-          "Poster 4× / jour par compte.",
-          "Être régulier sur le long terme.",
-          "Faire des slideshows viraux (pas des carousels de merde).",
+          "Un compte TikTok déclaré — et le tenir.",
+          "Poster régulier, sans ferme ni auto-post unofficial.",
+          "Montrer l’app ou son usage réel : rangs, Live Activity, carte 9:16.",
+          "Respecter le ton : faits, pas hype, pas avant/après corporel.",
         ]}
       />
       <H2>Un bon clipper obtient :</H2>
       <Ul
         items={[
-          "1 compte actif → autour de 500 $ / mois.",
-          "5 comptes actifs → autour de 2 000 $ / mois.",
-          "Une compétence qui lui servira toute sa vie.",
-          "La méthode complète pour distribuer ce qu’il veut.",
-          "Des bonus de fou avec Process.",
-          "La liberté de vivre du clipping.",
+          "Un code unique et un lien tracké.",
+          "Une commission sur le premier paiement Pro attribué — si vente il y a.",
+          "Rien d’autre promis. Pas de palier vues, pas d’iPhone, pas de 2 000 $ / mois.",
         ]}
       />
-      <H2>Exemples de bons clippers :</H2>
+      <H2>Référence</H2>
       <a
-        href="https://www.tiktok.com/@mannyprcs"
+        href={program.handleUrl}
         target="_blank"
         rel="noreferrer"
         className="mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium"
       >
-        @mannyprcs
+        {program.handle}
         <ExternalLink className="size-3.5 text-neutral-400" />
       </a>
-      <H2>Le rythme</H2>
-      <Ol
-        items={[
-          "Compte looksmax (glowup_man, debloat_prime…). Photo de profil avec un bord coloré. Bio : tu as découvert Process Debloat sur l’App Store et tu as glow up.",
-          "Chauffe 2 jours : cherche debloat / glow up / looksmax, like, commente, scrolle. 1 post / jour max la première semaine.",
-          "Ensuite : 4 posts / jour par compte. Varie entre les 3 formats (Guide 72h, Glow-up, Foods).",
-        ]}
-      />
       <H2>Ce qui convertit</H2>
       <Ol
         items={[
-          "Sans pin + bio, tu fais des vues pour TikTok, pas pour Process.",
+          "Sans code + lien, tu fais des vues pour TikTok, pas pour Aven.",
           <>
-            Commentaire épinglé : {joinUrl()} - code {program.inviteCode}.
+            Commentaire épinglé : {joinUrl()} — code {program.inviteCode}. Bio : le même lien.
           </>,
-          "5 min après le post, un autre compte commente « C’est quoi l’app ? » — tu réponds avec un screen App Store.",
-          "Sondage en commentaire : « Tu vas télécharger Process ? » — OUI et OUI.",
-          "Dès qu’un post passe 40k, tu le dupliques : même hook, nouvel angle, nouvelles photos.",
+          "Une idée par post. Rangs, Live Activity, ou carte de séance — pas les trois mélangés.",
+          "Tes photos de salle. Le kit (quand il sera prêt) en payoff, pas en slide 1.",
         ]}
       />
       <DontBox
         items={[
-          "Télécharger tes posts pour les reposter. TikTok reconnait le fichier → shadowban.",
-          "Slideshows full IA, ou contenu marqué « généré par IA ».",
-          "Poster 20 slideshows le premier jour sans avoir chauffé.",
-          "Pub payante. Les commissions ne seront pas versées.",
+          "Claims santé, perte de poids, transformation garantie, avant/après corporels.",
+          "Prix et promos dans le clip — le prix vit sur la fiche App Store.",
+          "Faux témoignages, vues achetées, bots, contenu volé.",
+          "Lien App Store inventé tant que la fiche est hors ligne.",
         ]}
       />
       <p className="mt-6">
@@ -248,120 +242,116 @@ function Vendre() {
 function Comptes() {
   return (
     <div>
-      <ArticleTitle>Créer ses comptes TikTok</ArticleTitle>
+      <ArticleTitle>Un compte TikTok</ArticleTitle>
       <ArticleP>
-        Tu crées tes comptes toi-même. Pas tous le même jour : un compte trop proche de l’autre sur
-        le même iPhone, TikTok les lie et les shadowban. Espace-les. 1 nouveau compte par semaine,
-        avec quelques jours d’intervalle.
+        Un compte TikTok déclaré par clipper. C’est la règle. Changement possible après validation
+        — tu ne stacks pas les @. Pas de ferme d’iPhones, pas de multi-comptes, pas de SIM / proxy
+        / VPN pour « scaler ».
       </ArticleP>
       <H2>Le rythme</H2>
       <Ol
         items={[
-          "1 nouveau compte TikTok par semaine. Pas 3 le lundi.",
-          "Quelques jours d’intervalle entre chaque création — même si tu as le temps d’en faire plus.",
-          "Chauffe le nouveau compte avant d’en ouvrir un autre (scroll, like, 1 post / jour la première semaine).",
+          "Tu candidatures avec le @ que tu vas vraiment utiliser.",
+          "Tu reçois ton code et tu postes sur ce compte, à partir du lancement App Store.",
+          "Si tu dois changer de @ : tu demandes, un modo valide, un seul compte reste actif.",
         ]}
       />
       <GrayNote className="mt-5">
-        Maximum 8 comptes TikTok par iPhone. Au-delà, TikTok shadowban — souvent plusieurs comptes
-        d’un coup, pas juste le 9e.
+        Les portails qui poussent 8 comptes par iPhone, le warmup de ferme et le geo-spoof : ce
+        n’est pas Aven. Un produit propre, un programme propre.
       </GrayNote>
-      <H2>Les comptes déjà créés comptent</H2>
-      <ArticleP>
-        Si tu as déjà créé des comptes TikTok sur cet iPhone — perso, tests, vieux @, comptes que tu
-        n’utilises plus — ils rentrent dans les 8. Un compte créé sur cet iPhone = 1 slot. Tu n’as
-        pas 8 slots Process en plus : tu as 8 moins ceux qui existent déjà.
-      </ArticleP>
       <DontBox
         items={[
-          "Créer 8 comptes d’un coup « pour être prêt ». Ils tombent ensemble.",
-          "Oublier un vieux compte perso dans le décompte. TikTok, lui, ne l’oublie pas.",
-          "Passer 8 en se disant que « ça ira ». Ça shadowban les comptes.",
+          "Ouvrir plusieurs TikTok « pour être prêt ».",
+          "VPN, Outline, Hetzner, spoof de région.",
+          "Achat de vues, commentaires, bots.",
         ]}
       />
-      <H2>Quand tu crées le compte</H2>
+      <H2>Sur le compte</H2>
       <Ol
         items={[
-          "Nom avec un mot-clé looksmax : glowup_man, debloat_prime, New_looksmax…",
-          "Photo de profil avec un bord coloré (rouge, bleu, vert).",
-          "Bio : tu as découvert Process Debloat sur l’App Store et tu as glow up.",
+          "Niche gym / fit / lifestyle, en français.",
+          "Bio : lien tracké + code, pas un roman.",
+          "Contenu : tes séances. Aven en payoff.",
         ]}
       />
     </div>
   );
 }
 
-function Warmup() {
+function ReglesResume() {
   return (
     <div>
-      <ArticleTitle>Comment warm up</ArticleTitle>
+      <ArticleTitle>Les règles</ArticleTitle>
       <ArticleP>
-        Un compte neuf que tu bombes de slideshows le premier jour se fait shadowban. Le warm up,
-        c’est faire croire à TikTok que tu es un vrai compte looksmax : tu scrolles, tu likes, tu
-        commentes — puis tu postes doucement.
+        Attribution par code. Commission sur le premier paiement Pro. Seuil 50 €. Un compte. Pas
+        de dark pattern, pas de stats inventées, pas de « vues garanties ».
       </ArticleP>
-      <H2>Jour 1 et 2 — chauffer sans poster</H2>
-      <Ol
+      <H2>Interdits (clips et site)</H2>
+      <Ul
         items={[
-          "Taper « debloat face », « glow up », « looksmax » dans la recherche.",
-          "Regarder, liker et commenter 15 min.",
-          "Scroller le Pour toi plusieurs fois dans la journée.",
-          "Mettre des slideshows dans les brouillons — tu ne les publies pas encore.",
+          "Claims médicaux, perte de poids, transformation, résultats rapides.",
+          "Faux témoignages, fausse preuve sociale, faux partenariats.",
+          "Prix dans les contenus. Concurrents nommés. Comparaisons agressives.",
+          "Musiques ou visuels sans droits. Multi-comptes. Bots.",
         ]}
       />
-      <H2>Ensuite — monter le volume</H2>
+      <H2>Acceptation d’un clip</H2>
       <Ol
         items={[
-          "Semaine 1 : 1 post / jour MAX.",
-          "Semaine 2 : 2 posts / jour.",
-          "Ensuite : 4 posts / jour par compte.",
+          "Il montre l’app ou son usage réel.",
+          "Il respecte le ton et les interdits.",
+          "Il porte le CTA correct (lien + code), pas un store fantôme.",
+          "Un refus est motivé. Tu corriges, tu re-soumets.",
         ]}
       />
-      <GrayNote className="mt-5">
-        Poster via API, ce n’est pas le problème. Le compte que tu ne visites pas, lui, se fait
-        griller. Chaque jour : rentre dans le compte, like, commente, sondage, scrolle.
-      </GrayNote>
       <DontBox
         items={[
-          "Poster 20 slideshows le premier jour.",
-          "Sauter le warm up parce que « le format est bon ».",
-          "Créer un compte et le laisser mort 3 semaines, puis tout poster d’un coup.",
+          "Warm-up de comptes, fermes, VPN.",
+          "Faux avant/après.",
+          "Promesses de revenus irréalistes.",
         ]}
       />
+      <p className="mt-6">
+        <Link href="/regles" className="text-[14px] font-semibold underline-offset-4 hover:underline">
+          Lire les règles du programme
+        </Link>
+      </p>
     </div>
   );
 }
 
 function FormatSlideshow() {
-  const [open, setOpen] = useState<string>("72h");
+  const [open, setOpen] = useState<string>("rangs");
   return (
     <div>
       <ArticleTitle>Le format slideshow</ArticleTitle>
       <ArticleP>
-        On ne se filme pas. On poste des slideshows TikTok (Photo Mode) : une suite de slides 9:16,
-        un hook en 1 seconde, une promesse par post. Tu copies une structure qui convertit — pas une
-        vidéo 1:1. SlideshowLab pour monter. Format pour voir les exemples qui marchent.
+        Photo Mode TikTok : suite de slides 9:16, hook en 1 seconde, une promesse par post. Tu
+        copies une structure — pas une vidéo 1:1. Tes images de salle + le kit (quand il sera
+        produit). SlideshowLab pour monter. Format pour les angles.
       </ArticleP>
       <H2>Ce qui fait scroller</H2>
       <Ol
         items={[
           "Hook slide = 1 idée. Le viewer comprend en 1 seconde ce qu’il gagne.",
-          "Une promesse par carrousel. Pas un mélange glow-up + recette + POV.",
+          "Une promesse par carrousel. Pas un mélange rangs + nutrition + POV.",
           "Son tendance OK, collé à l’émotion — pas un son random.",
           "Caption = 1 ligne + hashtags. Le CTA est le lien, pas un script d’ads.",
         ]}
       />
       <H2>Les 3 formats officiels</H2>
       <p className="mt-2 text-[15px] text-neutral-600">
-        Référence : @mannyprcs. Tu copies la structure, pas les fichiers.
+        Référence : {program.handle}. Placeholders typo — le kit HD n’est pas produit. Tu copies la
+        structure, pas des captures inventées.
       </p>
       <a
-        href="https://www.tiktok.com/@mannyprcs"
+        href={program.handleUrl}
         target="_blank"
         rel="noreferrer"
         className="mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium"
       >
-        @mannyprcs
+        {program.handle}
         <ExternalLink className="size-3.5 text-neutral-400" />
       </a>
       <div className="mt-5 space-y-3">
@@ -386,7 +376,13 @@ function FormatSlideshow() {
                   {fmt.images.map((src, i) => (
                     <div key={src}>
                       <div className="overflow-hidden rounded-xl">
-                        <Image src={src} alt={fmt.labels[i]} width={224} height={400} className="h-auto w-full" />
+                        <Image
+                          src={src}
+                          alt={fmt.labels[i]}
+                          width={224}
+                          height={400}
+                          className="h-auto w-full"
+                        />
                       </div>
                       <p className="mt-2 text-[12px] text-neutral-500">{fmt.labels[i]}</p>
                     </div>
@@ -400,10 +396,10 @@ function FormatSlideshow() {
       <H2>Comment poster</H2>
       <Ol
         items={[
-          "TikTok → + → Photo (pas Vidéo).",
-          "Importer les JPG dans l’ordre slide_01, slide_02, … Recadrage 9:16, ne pas zoomer le texte.",
-          "Ne re-tape pas le texte. Il est déjà sur l’image.",
-          `Commentaire : ${joinUrl()} - code ${program.inviteCode} — puis épingler. Sans pin + bio, tu fais des vues pour TikTok, pas pour Process.`,
+          "TikTok → + → Photo (pas Vidéo), ou ta facecam de vraie séance.",
+          "9:16. Hook, preuve, payoff. Le kit HD viendra coller l’app en slide 3.",
+          "Ne promets pas une transformation. Rangs, repos, carte — des faits.",
+          `Commentaire : ${joinUrl()} — code ${program.inviteCode} — puis épingler. Pas de lien App Store tant que la fiche est hors ligne.`,
         ]}
       />
       <p className="mt-5 flex flex-wrap gap-4">
@@ -423,33 +419,32 @@ function Resultats() {
     <div>
       <ArticleTitle>Les résultats à attendre</ArticleTitle>
       <ArticleP>
-        Si ton compte est déjà chauffé, tes premières ventes peuvent arriver dès ce soir. Sinon,
-        compte ~3 jours pour le warm up — puis tu postes. Ce qui suit, c’est du volume et un lien
-        qui convertit.
+        Aucun revenu n’est garanti. Les inscriptions sont ouvertes pour constituer le roster.
+        Les clips se publient à partir du lancement App Store. Les commissions suivent les
+        abonnements Pro réellement attribués à ton code — premier paiement seulement.
       </ArticleP>
       <H2>Le déroulé</H2>
       <Ol
         items={[
-          "Compte déjà chaud : tu postes aujourd’hui, premières ventes possibles dès ce soir.",
-          "Compte neuf : ~3 jours de warm up, puis tu montes le rythme.",
-          "Dès qu’un post passe 40k : tu le dupliques — même hook, nouvel angle, nouvelles photos.",
+          "Candidature → validation → code + lien tracké + kit.",
+          "Tu prépares tes angles maintenant. Tu postes au lancement, pas avant avec un store fantôme.",
+          "Tu soumets le lien du clip. Un modo vérifie. Les ventes sont rapprochées à la main.",
         ]}
       />
       <H2>Ce que ça peut donner</H2>
       <Ul
         items={[
-          "1 compte actif, bien tenu → autour de 500 $ / mois.",
-          "5 comptes actifs → autour de 2 000 $ / mois.",
-          "Des primes en plus des 40 %, dès que les vues s’accumulent.",
-          "Une compétence qui reste : poster des slideshows qui convertissent.",
+          "0 € si personne ne prend Pro avec ton code. C’est possible, et c’est dit.",
+          "Une commission par premier paiement attribué, indicatif 1,00 € / 9,20 € / 27,20 €.",
+          "Un virement une fois le seuil 50 € atteint — pas avant.",
+          "Pas de palier 100k vues, pas d’iPhone, pas de 500 $ / mois affiché comme norme.",
         ]}
       />
-      <H2>Les primes vues</H2>
+      <H2>La grille</H2>
       <PercentCard />
-      <BonusList />
       <GrayNote className="mt-6">
-        Ce n’est pas une vidéo miracle — c’est un rythme. Tu construis compte par compte, et les
-        abos qui restent te paient chaque semaine.
+        Ce n’est pas une vidéo miracle. C’est un produit propre sur gymtok, un code, et des ventes
+        attribuées — ou pas.
       </GrayNote>
     </div>
   );

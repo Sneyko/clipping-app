@@ -42,7 +42,7 @@ export default function FormatPage() {
         id: `extra-${Date.now()}`,
         title: title.trim() || "Format ajouté",
         views: "—",
-        src: "/format/guide-debloat.png",
+        src: "/format/rangs-pecs.png",
         url,
       },
     ]);
@@ -62,8 +62,8 @@ export default function FormatPage() {
         Format
       </h1>
       <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-neutral-600">
-        Tous les formats Process, plus ceux que les clippers ajoutent. Colle un TikTok, crée un
-        format — le MCP les voit tous.
+        Angles Aven pour gymtok. Pas de compteurs de vues inventés. Colle un TikTok réel — le
+        visuel reste un placeholder tant que le kit HD n’est pas là.
       </p>
 
       <div className="mt-5 flex flex-wrap gap-2">
@@ -84,7 +84,13 @@ export default function FormatPage() {
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {library.map((card) => (
           <article key={card.id} className="relative overflow-hidden rounded-2xl">
-            <Image src={card.src} alt={card.title} width={465} height={580} className="aspect-[3/4] w-full object-cover" />
+            <Image
+              src={card.src}
+              alt={card.title}
+              width={465}
+              height={580}
+              className="aspect-[3/4] w-full object-cover"
+            />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pt-8 pb-2.5">
               <p className="text-[14px] leading-tight font-semibold text-white">{card.title}</p>
               <p className="mt-1 text-[13px] font-medium text-white/90">{card.views}</p>
@@ -105,9 +111,9 @@ export default function FormatPage() {
         <p className="text-[11px] font-medium tracking-[0.14em] text-neutral-400 uppercase">
           ENSUITE
         </p>
-        <h2 className="mt-1 text-[22px] font-semibold tracking-tight">Comptes à copier</h2>
+        <h2 className="mt-1 text-[22px] font-semibold tracking-tight">Compte officiel</h2>
         <p className="mt-1 text-[14.5px] text-neutral-600">
-          Ouvre le compte, copie la structure — pas les fichiers.
+          Pas de comptes « à copier » avec des likes inventés. Un handle : @avenworkout.
         </p>
 
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
@@ -115,7 +121,7 @@ export default function FormatPage() {
             <article key={acc.handle} className="rounded-2xl border border-neutral-200 p-5">
               <div className="flex items-start gap-3">
                 <Image
-                  src={acc.mosaic}
+                  src={acc.avatar}
                   alt=""
                   width={40}
                   height={40}
@@ -132,7 +138,13 @@ export default function FormatPage() {
                 </div>
               </div>
               <p className="mt-3 text-[13.5px] leading-relaxed text-neutral-600">{acc.blurb}</p>
-              <Image src={acc.mosaic} alt={acc.name} width={885} height={750} className="mt-4 h-auto w-full rounded-xl" />
+              <Image
+                src={acc.mosaic}
+                alt={acc.name}
+                width={885}
+                height={750}
+                className="mt-4 h-auto w-full rounded-xl"
+              />
               <div className="mt-4 flex gap-2">
                 <Button
                   className="h-9 rounded-lg bg-neutral-900 text-[13px] text-white hover:bg-neutral-800"
@@ -182,8 +194,8 @@ export default function FormatPage() {
             <DialogTitle>Nouveau format</DialogTitle>
           </DialogHeader>
           <p className="text-sm text-neutral-600">
-            Un format, c’est une structure (Guide 72h, Glow-up, Foods) — pas un fichier. Colle un
-            TikTok qui tourne, ou ouvre SlideshowLab.
+            Un format, c’est une structure (Rangs, Live Activity, Carte 9:16) — pas un fichier.
+            Colle un TikTok réel, ou ouvre SlideshowLab.
           </p>
           <DialogFooter>
             <Button asChild>

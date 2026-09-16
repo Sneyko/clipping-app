@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { ArticleP, ArticleTitle, GrayNote, H2, Ol, Ul } from "@/components/layout/article";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { joinUrl, program } from "@/lib/data";
 
 export default function AutomatiserPage() {
   const [error, setError] = useState<string | null>(null);
@@ -27,8 +28,7 @@ export default function AutomatiserPage() {
       <ArticleTitle>Automatiser</ArticleTitle>
       <ArticleP>
         Le clipping, c’est du volume sur une structure — pas un robot qui poste à ta place. Tu
-        batches dans SlideshowLab, tu postes à la main en Photo Mode, tu rentres chaque jour dans
-        le compte.
+        batches dans SlideshowLab, tu postes à la main, tu tiens un seul compte déclaré.
       </ArticleP>
 
       {error ? (
@@ -46,25 +46,25 @@ export default function AutomatiserPage() {
       <H2>Ce qui tourne tout seul</H2>
       <Ul
         items={[
-          "Le lien useprocess.xyz/join/… dans le commentaire épinglé.",
-          "Les 40 % du net, chaque semaine, tant que l’abo reste.",
-          "Les primes vues qui s’additionnent sur le compte.",
+          `Le lien ${joinUrl()} dans le commentaire épinglé — vitrine, pas un store fantôme.`,
+          "Les 40 % du net sur le premier paiement Pro attribué, si vente il y a.",
+          "Le seuil 50 € : en dessous, le solde reste.",
         ]}
       />
 
       <H2>Ce que tu fais à la main</H2>
       <Ol
         items={[
-          "Warm up 2 jours, puis 1 post / jour, puis 4 / jour par compte.",
-          "Varie Guide 72h, Glow-up, Foods.",
-          "Like, commente, sondage, scrolle — chaque jour, dans le compte.",
-          "Dès qu’un post passe 40k : même hook, nouvel angle, nouvelles photos.",
+          "Un compte. Tes séances. Tes images.",
+          "Varie Rangs, Live Activity, Carte 9:16.",
+          "Soumets le lien du clip ici. Un modo vérifie.",
+          "Pas de ferme, pas de VPN, pas d’auto-post unofficial.",
         ]}
       />
 
       <GrayNote className="mt-6">
-        Poster via API, ce n’est pas le problème. Le compte que tu ne visites pas se fait griller.
-        Pas de ferme de téléphones, pas d’auto-post unofficial sur ce portail.
+        Poster via API n’est pas au programme. Ce portail ne lance aucun script de publication, aucun
+        spoof, aucun warmup de comptes. Handle officiel : {program.handle}.
       </GrayNote>
 
       <div className="mt-6 rounded-2xl border border-neutral-200 px-5 py-8 text-center">

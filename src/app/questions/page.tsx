@@ -23,10 +23,10 @@ export default function QuestionsPage() {
       <p className="text-[11px] font-medium tracking-[0.16em] text-neutral-400 uppercase">
         UTILES
       </p>
-      <ArticleTitle>Questions</ArticleTitle>
+      <ArticleTitle>FAQ</ArticleTitle>
       <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">
-        Paiement, lien, comptes, shadowban, US. Si ça n’est pas ici, c’est probablement « pas
-        encore » — Stripe et TikTok viendront plus tard.
+        Gains, code, paiement, un compte, kit. Si ça n’est pas ici, c’est probablement « pas encore »
+        — Stripe et TikTok viendront plus tard. Aucun revenu n’est garanti.
       </p>
       <Input
         value={query}
@@ -38,7 +38,7 @@ export default function QuestionsPage() {
         <EmptyState
           className="mt-6"
           title="Rien sur ce mot"
-          body="Essaie « 40 % », « VPN », « warmup » ou « Stripe »."
+          body="Essaie « 40 % », « 50 € », « code » ou « App Store »."
           action={
             <Button size="sm" variant="outline" onClick={() => setQuery("")}>
               Vider la recherche

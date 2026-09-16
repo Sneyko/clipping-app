@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Layers } from "lucide-react";
 import { TikTokIcon } from "@/components/brand/marks";
-import { labStructures } from "@/lib/data";
+import { labStructures, program } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -21,7 +21,8 @@ export default function SlideshowLabPage() {
       </p>
       <h1 className="text-[28px] font-semibold tracking-tight">SlideshowLab</h1>
       <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-neutral-600">
-        Les leçons d’abord. Les structures officielles sont en bas, les exemples TikTok dans Format.
+        Les leçons d’abord. Les structures officielles sont en bas, les angles dans Format. Kit HD
+        pas encore produit — placeholders typo, pas de faux screens.
       </p>
 
       <section className="mt-8">
@@ -33,14 +34,15 @@ export default function SlideshowLabPage() {
         </h2>
         <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-neutral-600">
           Sur TikTok, un slideshow c’est un post Photo — l’icône deux carrés sur la miniature. Tu
-          swipe les slides. Pas une facecam. Voici @mannyprcs, puis les mêmes formats dans Format.
+          swipe les slides. Hook, preuve, payoff. Référence {program.handle}, puis les mêmes
+          formats dans Format.
         </p>
         <div className="mt-5 overflow-hidden rounded-2xl border border-neutral-200 shadow-sm">
           <Image
-            src="/lab/tiktok-manny.png"
-            alt="Profil TikTok @mannyprcs"
+            src="/lab/slideshow-banner.png"
+            alt="Structure slideshow Aven — Photo Mode 9:16 gymtok"
             width={1760}
-            height={1144}
+            height={720}
             className="h-auto w-full"
             priority
           />
@@ -74,7 +76,13 @@ export default function SlideshowLabPage() {
             {current.images.map((src, i) => (
               <div key={src}>
                 <div className="overflow-hidden rounded-xl">
-                  <Image src={src} alt={current.labels[i]} width={367} height={640} className="h-auto w-full" />
+                  <Image
+                    src={src}
+                    alt={current.labels[i]}
+                    width={367}
+                    height={640}
+                    className="h-auto w-full"
+                  />
                 </div>
                 <p className="mt-2 text-[12px] text-neutral-500">{current.labels[i]}</p>
               </div>
@@ -90,7 +98,7 @@ export default function SlideshowLabPage() {
             <Button asChild className="mt-6 h-9 rounded-lg bg-neutral-900 text-white hover:bg-neutral-800">
               <Link href="/format">
                 <TikTokIcon className="size-3.5" />
-                Voir les exemples dans Format
+                Voir les angles dans Format
               </Link>
             </Button>
           </div>

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { clipperColors, clipperInitials, clippersRoster } from "@/lib/clippers";
 import { cn } from "@/lib/utils";
 
-const filters = ["Gains", "Ventes", "Essais", "Installs", "Visites"] as const;
+const filters = ["Gains", "Ventes", "Clips", "Installs", "Visites"] as const;
 
 export default function ClippersPage() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("Gains");
@@ -42,21 +42,28 @@ export default function ClippersPage() {
         Clippers
       </h1>
       <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-neutral-600">
-        Tous les clippers Process, classés par gains, ventes, essais et installs. Le podium change
-        selon le filtre.
+        Classement réel, pas un podium inventé. Inscriptions ouvertes. Les rangs s’affichent après
+        les premières commissions attribuées.
       </p>
 
       {you ? (
-        <div className="mt-5 flex items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+        <div className="mt-5 flex items-center gap-3 rounded-2xl border border-[#E8F5C8] bg-[#F7FDE8] px-4 py-3">
           <Avatar name={you.name} code={you.code} className="size-10 text-[13px]" />
           <div>
             <p className="text-[14px] font-semibold">
               Tu es n°{you.rank} sur {clippersRoster.length}
             </p>
-            <p className="text-[12px] text-neutral-500">€0.00 · 0 ventes · 0 essais · 0 installs</p>
+            <p className="text-[12px] text-neutral-500">€0.00 · 0 ventes · 0 clips · 0 installs</p>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div className="mt-5 rounded-2xl border border-[#E8F5C8] bg-[#F7FDE8] px-4 py-3">
+          <p className="text-[14px] font-semibold">Pas encore classé</p>
+          <p className="text-[12px] text-neutral-500">
+            €0.00 · 0 ventes · seuil 50 € · aucun roster fictif
+          </p>
+        </div>
+      )}
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-1.5">
@@ -84,41 +91,51 @@ export default function ClippersPage() {
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-3 items-end gap-3">
-        {podium.map((p, i) => {
-          const place = i === 1 ? 1 : i === 0 ? 2 : 3;
-          const tones =
-            place === 1
-              ? "border-amber-100 bg-amber-50/70"
-              : place === 2
-                ? "border-neutral-100 bg-neutral-50"
-                : "border-orange-100 bg-orange-50/50";
-          return (
-            <div
-              key={p.code}
-              className={cn(
-                "rounded-2xl border px-3 py-6 text-center",
-                tones,
-                place === 1 && "py-8"
-              )}
-            >
-              <span
+      {podium.length > 0 ? (
+        <div className="mt-6 grid grid-cols-3 items-end gap-3">
+          {podium.map((p, i) => {
+            const place = i === 1 ? 1 : i === 0 ? 2 : 3;
+            const tones =
+              place === 1
+                ? "border-amber-100 bg-amber-50/70"
+                : place === 2
+                  ? "border-neutral-100 bg-neutral-50"
+                  : "border-orange-100 bg-orange-50/50";
+            return (
+              <div
+                key={p.code}
                 className={cn(
-                  "mx-auto mb-2 flex size-5 items-center justify-center rounded-full text-[10px] font-bold text-white",
-                  place === 1 ? "bg-amber-400" : place === 2 ? "bg-neutral-400" : "bg-orange-400"
+                  "rounded-2xl border px-3 py-6 text-center",
+                  tones,
+                  place === 1 && "py-8"
                 )}
               >
-                {place}
-              </span>
-              <Avatar name={p.name} code={p.code} rank={place} className="mx-auto size-14 text-[16px]" />
-              <p className="mt-3 font-semibold">{p.name}</p>
-              <p className="text-[12px] tracking-wide text-neutral-400 uppercase">{p.code}</p>
-              <p className="mt-2 text-[18px] font-semibold">€0.00</p>
-              <p className="text-[11px] text-neutral-400">0 ventes · 0 essais · 0 installs</p>
-            </div>
-          );
-        })}
-      </div>
+                <span
+                  className={cn(
+                    "mx-auto mb-2 flex size-5 items-center justify-center rounded-full text-[10px] font-bold text-white",
+                    place === 1 ? "bg-amber-400" : place === 2 ? "bg-neutral-400" : "bg-orange-400"
+                  )}
+                >
+                  {place}
+                </span>
+                <Avatar name={p.name} code={p.code} rank={place} className="mx-auto size-14 text-[16px]" />
+                <p className="mt-3 font-semibold">{p.name}</p>
+                <p className="text-[12px] tracking-wide text-neutral-400 uppercase">{p.code}</p>
+                <p className="mt-2 text-[18px] font-semibold">€0.00</p>
+                <p className="text-[11px] text-neutral-400">0 ventes · 0 clips · 0 installs</p>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 px-5 py-10 text-center">
+          <p className="text-[15px] font-semibold">Podium vide</p>
+          <p className="mx-auto mt-1 max-w-md text-[13px] text-neutral-500">
+            Personne n’a encore de commission attribuée. On n’affiche pas 128 noms pour faire
+            nombre.
+          </p>
+        </div>
+      )}
 
       <section className="mt-6 overflow-hidden rounded-2xl border border-neutral-200">
         <div className="flex items-center justify-between px-5 py-3">
@@ -130,12 +147,18 @@ export default function ClippersPage() {
         ) : rows.length === 0 ? (
           <div className="p-5">
             <EmptyState
-              title="Personne dans ce filtre"
-              body="Aucun clipper ne correspond à ce nom ou code."
+              title={query.trim() ? "Personne dans ce filtre" : "Roster vide"}
+              body={
+                query.trim()
+                  ? "Aucun clipper ne correspond à ce nom ou code."
+                  : "Les clippers validés apparaîtront ici. Recherche « AVEN » : rien à inventer."
+              }
               action={
-                <button type="button" className="text-sm underline" onClick={() => setQuery("")}>
-                  Vider la recherche
-                </button>
+                query.trim() ? (
+                  <button type="button" className="text-sm underline" onClick={() => setQuery("")}>
+                    Vider la recherche
+                  </button>
+                ) : undefined
               }
             />
           </div>
@@ -148,7 +171,7 @@ export default function ClippersPage() {
                   <th className="px-2 py-2 font-medium">Clipper</th>
                   <th className="px-2 py-2 text-right font-medium">Gains</th>
                   <th className="px-2 py-2 text-right font-medium">Ventes</th>
-                  <th className="px-2 py-2 text-right font-medium">Essais</th>
+                  <th className="px-2 py-2 text-right font-medium">Clips</th>
                   <th className="px-2 py-2 text-right font-medium">Installs</th>
                   <th className="px-4 py-2 text-right font-medium">Visites</th>
                 </tr>
@@ -181,7 +204,7 @@ export default function ClippersPage() {
                           <p className="font-semibold text-neutral-900">
                             {row.name}
                             {row.you ? (
-                              <span className="ml-2 text-[10px] font-medium tracking-wide text-blue-600 uppercase">
+                              <span className="ml-2 text-[10px] font-medium tracking-wide text-[#4F6E0A] uppercase">
                                 TOI
                               </span>
                             ) : null}

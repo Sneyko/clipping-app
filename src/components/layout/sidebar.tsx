@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Settings, Wallet } from "lucide-react";
-import { ProcessMark, TikTokIcon } from "@/components/brand/marks";
+import { AvenMark, TikTokIcon } from "@/components/brand/marks";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -36,7 +37,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
     await new Promise((r) => setTimeout(r, 700));
     setConnecting(false);
     setConnectError(
-      "Stripe Connect n’est pas branché. Rien n’a été envoyé. Le bouton reste une démo locale."
+      "Stripe Connect n’est pas branché. Rien n’a été envoyé. Le bouton reste une démo locale. Paiement réel : seuil 50 €, virement ou PayPal."
     );
     toast.error("Connexion Stripe indisponible");
   }
@@ -47,9 +48,16 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <Link
           href="/"
           onClick={handleNav}
-          className="text-[11px] font-bold tracking-[0.06em] text-neutral-900"
+          className="flex items-center gap-2 text-[11px] font-bold tracking-[0.06em] text-neutral-900"
         >
-          PROCESS CLIPPING
+          <Image
+            src="/brand/aven-icon.png"
+            alt=""
+            width={18}
+            height={18}
+            className="size-[18px] rounded-[4px]"
+          />
+          AVEN CLIPPING
         </Link>
       </div>
 
@@ -81,8 +89,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                   >
                     {item.icon === "tiktok" ? (
                       <TikTokIcon className="size-4 shrink-0 opacity-80" />
-                    ) : item.icon === "process" ? (
-                      <ProcessMark />
+                    ) : item.icon === "aven" ? (
+                      <AvenMark />
                     ) : (
                       <item.icon className="size-4 shrink-0 opacity-80" />
                     )}
@@ -131,8 +139,14 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         </div>
 
         <div className="mt-2 flex items-center gap-2.5 rounded-xl px-1.5 py-2">
-          <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-800 text-[11px] font-semibold text-white">
-            {program.userName.slice(0, 1)}
+          <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-800">
+            <Image
+              src="/brand/aven-icon.png"
+              alt=""
+              width={32}
+              height={32}
+              className="size-8"
+            />
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-[13px] font-semibold text-neutral-900">{program.userName}</p>
@@ -158,7 +172,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           <DialogHeader>
             <DialogTitle>Stripe Connect</DialogTitle>
             <DialogDescription>
-              Les virements passeront par Stripe Connect. Cette démo n’envoie rien à Stripe.
+              Les virements passeront par Stripe Connect. Cette démo n’envoie rien à Stripe. Seuil
+              réel du programme : {program.payoutThreshold} cumulés, mensuel, virement ou PayPal.
             </DialogDescription>
           </DialogHeader>
           {connectError ? (

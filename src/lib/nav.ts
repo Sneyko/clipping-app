@@ -1,12 +1,11 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  BookOpen,
   CircleHelp,
-  Globe,
   House,
   Layers,
   PlaySquare,
   Plus,
-  Shield,
   Users,
 } from "lucide-react";
 
@@ -14,23 +13,22 @@ export type NavItem = {
   href: string;
   label: string;
   hint: string;
-  icon: LucideIcon | "tiktok" | "process";
+  icon: LucideIcon | "tiktok" | "aven";
 };
 
 export const mainNav: NavItem[] = [
   { href: "/", label: "Overview", hint: "Vue d’ensemble", icon: House },
   { href: "/demarrage", label: "Démarrage", hint: "Guide clipper", icon: PlaySquare },
   { href: "/slideshow-lab", label: "SlideshowLab", hint: "Structures officielles", icon: Layers },
-  { href: "/process-assets", label: "Process Assets", hint: "Fichiers officiels", icon: "process" },
+  { href: "/aven-assets", label: "Aven Assets", hint: "Kit de sources", icon: "aven" },
   { href: "/format", label: "Format", hint: "Bibliothèque", icon: "tiktok" },
   { href: "/clippers", label: "Clippers", hint: "Classement", icon: Users },
   { href: "/automatiser", label: "Automatiser", hint: "Cadence", icon: Plus },
 ];
 
 export const utilesNav: NavItem[] = [
-  { href: "/poster-us", label: "Poster US", hint: "Documentation", icon: Globe },
-  { href: "/shadowban", label: "Shadowban", hint: "Hygiène de compte", icon: Shield },
-  { href: "/questions", label: "Questions", hint: "FAQ", icon: CircleHelp },
+  { href: "/regles", label: "Règles", hint: "Programme", icon: BookOpen },
+  { href: "/questions", label: "FAQ", hint: "Questions", icon: CircleHelp },
 ];
 
 export const navItems: NavItem[] = [...mainNav, ...utilesNav];

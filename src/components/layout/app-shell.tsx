@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import Image from "next/image";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/layout/sidebar";
@@ -20,7 +21,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
-    document.title = `${meta.label} — Process Clipping`;
+    document.title = `${meta.label} — Aven Clipping`;
   }, [meta.label]);
 
   return (
@@ -40,7 +41,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               <Menu className="size-4" />
             </Button>
-            <p className="text-[11px] font-bold tracking-[0.06em]">PROCESS CLIPPING</p>
+            <Image
+              src="/brand/aven-icon.png"
+              alt=""
+              width={18}
+              height={18}
+              className="size-[18px] rounded-[4px]"
+            />
+            <p className="text-[11px] font-bold tracking-[0.06em]">AVEN CLIPPING</p>
           </header>
           <main className="flex-1 px-5 py-8 sm:px-8 lg:px-10 lg:py-9">{children}</main>
         </div>

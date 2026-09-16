@@ -16,6 +16,10 @@ export const metadata: Metadata = {
     template: `%s — ${program.name}`,
   },
   description: program.pitch,
+  icons: {
+    icon: "/brand/aven-icon.png",
+    apple: "/brand/aven-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

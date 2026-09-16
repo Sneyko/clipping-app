@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function TikTokIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
@@ -6,13 +8,15 @@ export function TikTokIcon({ className }: { className?: string }) {
   );
 }
 
-export function ProcessMark({ className }: { className?: string }) {
+export function AvenMark({ className }: { className?: string }) {
   return (
-    <span
-      className={`flex size-4 shrink-0 items-center justify-center rounded-[3px] bg-neutral-900 text-[9px] font-bold text-white ${className ?? ""}`}
-    >
-      P
-    </span>
+    <Image
+      src="/brand/aven-icon.png"
+      alt=""
+      width={16}
+      height={16}
+      className={`size-4 shrink-0 rounded-[3px] ${className ?? ""}`}
+    />
   );
 }
 

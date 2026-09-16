@@ -31,15 +31,15 @@ export function PercentCard() {
   return (
     <div className="rounded-2xl border border-neutral-100 bg-white px-5 py-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
       <div className="flex items-center gap-4">
-        <span className="flex size-12 items-center justify-center rounded-full bg-[#3B82F6] text-lg font-semibold text-white">
+        <span className="flex size-12 items-center justify-center rounded-full bg-[#C3F261] text-lg font-semibold text-[#0B0D0E]">
           %
         </span>
         <div>
           <p className="text-[13px] font-semibold tracking-wide text-neutral-800 uppercase">
-            À VIE <span className="text-[#3B82F6]">40%</span>
+            Premier paiement <span className="text-[#4F6E0A]">40%</span>
           </p>
           <p className="text-[13px] font-semibold tracking-wide text-neutral-800 uppercase">
-            DU NET SUR CHAQUE VENTE
+            du net sur l’abo attribué
           </p>
         </div>
       </div>

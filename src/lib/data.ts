@@ -1,25 +1,33 @@
 export const program = {
-  name: "Process Clipping",
-  product: "Process Debloat",
+  name: "Aven Clipping",
+  product: "Aven",
   pitch:
-    "Portail clipper Process Debloat. Slideshows TikTok, 40 % du net, lien useprocess.xyz.",
+    "Portail clipper Aven. Slideshows gymtok, 40 % du net sur le premier paiement Aven Pro attribué.",
   inviteName: "Evro",
-  inviteCode: "EVRO71",
-  joinHost: "useprocess.xyz",
+  inviteCode: "AVEN",
+  joinHost: "aven-workout.vercel.app",
   userName: "Evro",
-  userEmail: "useprocess.daylong139…",
+  userEmail: "evro@avenworkout…",
   whatsapp: "https://wa.me/",
+  handle: "@avenworkout",
+  handleUrl: "https://www.tiktok.com/@avenworkout",
+  vitrineUrl: "https://aven-workout.vercel.app",
+  appStoreId: "6810626340",
+  appStoreLive: false,
+  signature: "Chaque série compte.",
+  commission: "40 % du net",
+  payoutThreshold: "50 €",
 } as const;
 
 export const storageKeys = {
-  joinCode: "process-clipping.join-code",
-  formatLibrary: "process-clipping.format-library",
-  stripeConnect: "process-clipping.stripe-connect",
-  clipperQuery: "process-clipping.clipper-query",
+  joinCode: "aven-clipping.join-code",
+  formatLibrary: "aven-clipping.format-library",
+  stripeConnect: "aven-clipping.stripe-connect",
+  clipperQuery: "aven-clipping.clipper-query",
 } as const;
 
 export function joinUrl(code: string = program.inviteCode) {
-  return `${program.joinHost}/join/${code}`;
+  return `${program.joinHost}/?c=${code}`;
 }
 
 export const overviewKpis = [
@@ -42,23 +50,23 @@ export const overviewKpis = [
   {
     id: "paywall",
     label: "Paywall",
-    hint: "ont vu l’offre",
+    hint: "ont vu Aven Pro",
     value: 0,
     icon: "lock",
     line: "#fdba74",
   },
   {
-    id: "essais",
-    label: "Essais",
-    hint: "essais gratuits lancés",
+    id: "clips",
+    label: "Clips",
+    hint: "soumis et en revue",
     value: 0,
     icon: "spark",
-    line: "#f9a8d4",
+    line: "#C3F261",
   },
   {
     id: "ventes",
     label: "Ventes",
-    hint: "achats attribués",
+    hint: "abos Pro attribués",
     value: 0,
     icon: "bag",
     line: "#86efac",
@@ -75,275 +83,275 @@ export const demarrageNav = [
   { id: "produit", label: "Le produit qu’on vend" },
   { id: "paiement", label: "Combien vous êtes payé" },
   { id: "vendre", label: "Comment on vend" },
-  { id: "comptes", label: "Créer ses comptes TikTok" },
-  { id: "warmup", label: "Comment warm up" },
+  { id: "comptes", label: "Un compte TikTok" },
+  { id: "regles", label: "Les règles" },
   { id: "format", label: "Le format slideshow" },
   { id: "resultats", label: "Les résultats à attendre" },
 ] as const;
 
-export const viewBonuses = [
-  {
-    views: "100k",
-    reward: "50 €",
-    extra: null,
-    image: "/rewards/50eur.png",
-  },
-  {
-    views: "500k",
-    reward: "100 €",
-    extra: null,
-    image: "/rewards/100eur.png",
-  },
-  {
-    views: "1M",
-    reward: "150 €",
-    extra: "+ coaching 1-to-1",
-    image: "/rewards/coaching.png",
-  },
-  {
-    views: "10M",
-    reward: "iPhone 17",
-    extra: null,
-    image: "/rewards/iphone17.png",
-  },
+export const commissionTiers = [
+  { plan: "Mensuel", price: "2,99 €", cut: "≈ 1,00 €" },
+  { plan: "Annuel", price: "26,99 €", cut: "≈ 9,20 €" },
+  { plan: "À vie", price: "79,99 €", cut: "≈ 27,20 €" },
 ] as const;
-
-export const bonusNotes = [
-  "Le post doit contenir un CTA subtil vers Process (en respectant la méthodologie).",
-  "Les primes cash se débloquent à 200 € de commission déjà générée. L’iPhone à 1000 € — tes ventes d’abord, primes en plus.",
-  "Tu claims en DM à leks, avec le lien du compte TikTok, dès qu’un palier est hit.",
-  "C’est en plus des 40 % du net — pas à la place.",
-];
 
 export const officialFormats = [
   {
-    id: "72h",
-    title: "01 — Guide 72h",
+    id: "rangs",
+    title: "01 — Rangs musculaires",
     size: "1080×1920",
-    labels: ["Hook", "Before (bloat)", "Scan 2×2 + app"],
+    labels: ["Hook rang", "Paliers", "Payoff"],
     images: [
-      "/demarrage/72h-hook.png",
-      "/demarrage/72h-before.png",
-      "/demarrage/72h-scan.png",
+      "/demarrage/rangs-hook.png",
+      "/demarrage/rangs-paliers.png",
+      "/demarrage/rangs-app.png",
     ],
   },
   {
-    id: "glow",
-    title: "02 — Glow-up célébrité",
+    id: "live",
+    title: "02 — Live Activity",
     size: "1080×1920",
-    labels: ["Hook", "Tip visage", "Slide Process"],
+    labels: ["Hook repos", "Lock screen", "Séance"],
     images: [
-      "/demarrage/glow-hook.png",
-      "/demarrage/glow-tip.png",
-      "/demarrage/glow-process.png",
+      "/demarrage/live-hook.png",
+      "/demarrage/live-lock.png",
+      "/demarrage/live-seance.png",
     ],
   },
   {
-    id: "foods",
-    title: "03 — Foods",
+    id: "carte",
+    title: "03 — Carte 9:16",
     size: "1080×1920",
-    labels: ["Hook", "Aliment", "App + carte"],
+    labels: ["Hook bilan", "Carte séance", "CTA"],
     images: [
-      "/demarrage/food-hook.png",
-      "/demarrage/food-aliment.png",
-      "/demarrage/food-app.png",
+      "/demarrage/carte-hook.png",
+      "/demarrage/carte-card.png",
+      "/demarrage/carte-cta.png",
     ],
   },
 ] as const;
 
 export const labStructures = [
   {
-    id: "72h",
-    tab: "01 — Guide 72h",
-    heading: "“visage gonflé ? fais ça 72h”",
+    id: "rangs",
+    tab: "01 — Rangs musculaires",
+    heading: "“t’es quoi comme rang aux pecs ?”",
     steps: [
-      "1. Hook — une promesse, 1 seconde",
-      "2. Before — visage gonflé",
-      "3. After — même personne, plus net",
-      "4. Scan 2×2 — visages + screen app dans la grille",
-      "5. 5–8. Protocole : glace → cardio → alim → sauna",
+      "1. Hook — une question de rang, 1 seconde",
+      "2. Preuve — Bronze → Argent → Or → Platine → Diamant → Élite",
+      "3. Payoff — l’app, pas un avant/après corporel",
     ],
-    labels: ["Hook", "Before (bloat)", "Scan 2×2 + app"],
+    labels: ["Hook rang", "Paliers", "Payoff"],
     images: [
-      "/lab/struct-72h-hook.png",
-      "/lab/struct-72h-before.png",
-      "/lab/struct-72h-scan.png",
+      "/lab/struct-rangs-hook.png",
+      "/lab/struct-rangs-paliers.png",
+      "/lab/struct-rangs-app.png",
     ],
   },
   {
-    id: "glow",
-    tab: "02 — Glow-up célébrité",
-    heading: "“Comment glow up ? (méthode de X)”",
+    id: "live",
+    tab: "02 — Live Activity",
+    heading: "“le repos sans déverrouiller”",
     steps: [
-      "1. Hook — une célébrité / une méthode, 1 seconde",
-      "2. Tip visage — un geste, pas un mélange recette + POV",
-      "3. Slide Process — scan + app",
+      "1. Hook — zéro friction entre deux séries, 1 seconde",
+      "2. Preuve — Live Activity + Dynamic Island : exo, charge, 2/3, timer",
+      "3. Payoff — le tracker à une main, tableau kg / reps",
     ],
-    labels: ["Hook", "Tip visage", "Slide Process"],
+    labels: ["Hook repos", "Lock screen", "Séance"],
     images: [
-      "/demarrage/glow-hook.png",
-      "/demarrage/glow-tip.png",
-      "/demarrage/glow-process.png",
+      "/demarrage/live-hook.png",
+      "/demarrage/live-lock.png",
+      "/demarrage/live-seance.png",
     ],
   },
   {
-    id: "foods",
-    tab: "03 — Foods",
-    heading: "“FOODS THAT BLOAT”",
+    id: "carte",
+    tab: "03 — Carte 9:16",
+    heading: "“poste ton bilan de séance”",
     steps: [
-      "1. Hook — aliments qui gonflent, 1 seconde",
-      "2. Aliment — un aliment, une phrase",
-      "3. App + carte — recettes Process, pas un random POV",
+      "1. Hook — le format prêt-à-poster, 1 seconde",
+      "2. Preuve — carte 1080×1920 : durée, exercices, rang global",
+      "3. Payoff — lien tracké + code, pas un script d’ads",
     ],
-    labels: ["Hook", "Aliment", "App + carte"],
+    labels: ["Hook bilan", "Carte séance", "CTA"],
     images: [
-      "/demarrage/food-hook.png",
-      "/demarrage/food-aliment.png",
-      "/demarrage/food-app.png",
+      "/demarrage/carte-hook.png",
+      "/demarrage/carte-card.png",
+      "/demarrage/carte-cta.png",
     ],
   },
 ] as const;
 
 export const formatLibrarySeed = [
   {
-    id: "glow-rupture",
-    title: "Comment glow up après une rupture",
-    views: "8.6M",
-    src: "/format/glow-rupture.png",
+    id: "rangs-pecs",
+    title: "T’es quoi comme rang aux pecs ?",
+    views: "angle",
+    src: "/format/rangs-pecs.png",
   },
   {
-    id: "foods-bloat",
-    title: "Debloat food",
-    views: "7.0M",
-    src: "/format/foods-bloat.png",
+    id: "live-activity",
+    title: "Le repos sur l’écran verrouillé",
+    views: "angle",
+    src: "/format/live-activity.png",
   },
   {
-    id: "guide-debloat",
-    title: "Guide debloat Your face",
-    views: "1.6M",
-    src: "/format/guide-debloat.png",
+    id: "carte-seance",
+    title: "Poste ton bilan de séance",
+    views: "angle",
+    src: "/format/carte-seance.png",
   },
   {
-    id: "glow-x",
-    title: "Comment glow up (méthode de X)",
-    views: "306k",
-    src: "/format/glow-methode-x.png",
+    id: "seance-du-jour",
+    title: "Ta séance du jour est déjà prête",
+    views: "angle",
+    src: "/format/seance-du-jour.png",
   },
 ];
 
 export const copyAccounts = [
   {
-    name: "EvoFace",
-    handle: "@evofaceprime",
-    followers: "5k abonnés",
-    likes: "378.4k likes",
+    name: "Aven",
+    handle: "@avenworkout",
+    followers: "compte officiel",
+    likes: "pas de compteur inventé",
     blurb:
-      "Collages cyan. Photos détourées + icônes + hook gras. Un fond, une idée.",
-    mosaic: "/format/evoface-grid.png",
-    url: "https://www.tiktok.com/@evofaceprime",
-  },
-  {
-    name: "chud j",
-    handle: "@jacosahur",
-    followers: "1.4k abonnés",
-    likes: "35.8k likes",
-    blurb:
-      "Guides looksmaxxing. Fond pastel, schémas, avant/après, titre en capitales.",
-    mosaic: "/format/chudj-grid.png",
-    url: "https://www.tiktok.com/@jacosahur",
+      "Handle officiel. Gymtok FR, vraies séances, rangs et cartes 9:16. Tu copies la structure, pas des vues fantômes.",
+    mosaic: "/format/aven-grid.png",
+    avatar: "/format/aven-avatar.png",
+    url: "https://www.tiktok.com/@avenworkout",
   },
 ];
 
-export type ProcessAsset = {
+export type AvenAsset = {
   id: string;
   title: string;
   src: string;
   wide?: boolean;
+  ready?: boolean;
+  note?: string;
 };
 
-export const processAssets: { group: string; items: ProcessAsset[] }[] = [
+export const avenAssets: { group: string; items: AvenAsset[] }[] = [
   {
     group: "LOGO",
     items: [
-      { id: "icon-app", title: "Icône app", src: "/assets/icon-app.png" },
-      { id: "icon-tile", title: "Tôle", src: "/assets/icon-tile.png" },
+      {
+        id: "icon-app",
+        title: "Icône app",
+        src: "/brand/aven-icon.png",
+        ready: true,
+      },
+      {
+        id: "icon-tile",
+        title: "Tôle graphite",
+        src: "/assets/icon-tile.png",
+        ready: true,
+      },
     ],
   },
   {
-    group: "SCREENS APP",
+    group: "SCREENS APP — KIT HD À PRODUIRE",
     items: [
-      { id: "home", title: "Home", src: "/assets/screen-home.png" },
-      { id: "scan-clair", title: "Scan clair", src: "/assets/screen-scan-clair.png" },
-      { id: "scan-sombre", title: "Scan sombre", src: "/assets/screen-scan-sombre.png" },
-      { id: "scan-en", title: "Scan EN", src: "/assets/screen-scan-en.png" },
-      { id: "scan-before", title: "Scan before", src: "/assets/screen-scan-before.png" },
-      { id: "scan-after", title: "Scan after", src: "/assets/screen-scan-after.png" },
-      { id: "recettes", title: "Recettes", src: "/assets/screen-recettes.png" },
+      {
+        id: "rangs",
+        title: "Rangs",
+        src: "/assets/screen-rangs.png",
+        note: "Placeholder. Pas une capture Aven.",
+      },
+      {
+        id: "seance",
+        title: "Séance",
+        src: "/assets/screen-seance.png",
+        note: "Placeholder. Pas une capture Aven.",
+      },
+      {
+        id: "live",
+        title: "Live Activity",
+        src: "/assets/screen-live.png",
+        note: "Placeholder. Pas une capture Aven.",
+      },
+      {
+        id: "routines",
+        title: "Routines",
+        src: "/assets/screen-routines.png",
+        note: "Placeholder. Pas une capture Aven.",
+      },
+      {
+        id: "bilan",
+        title: "Bilan",
+        src: "/assets/screen-bilan.png",
+        note: "Placeholder. Pas une capture Aven.",
+      },
+      {
+        id: "journal",
+        title: "Journal",
+        src: "/assets/screen-journal.png",
+        note: "Placeholder. Pas une capture Aven.",
+      },
     ],
   },
   {
     group: "APP STORE",
     items: [
-      { id: "carte", title: "Carte App Store", src: "/assets/store-card.png", wide: true },
-      { id: "fiche", title: "Fiche App Store", src: "/assets/store-fiche.png", wide: true },
-      { id: "badge", title: "Badge Download", src: "/assets/badge-download.png" },
-      { id: "as-logo", title: "Logo App Store", src: "/assets/logo-appstore.png" },
+      {
+        id: "store-offline",
+        title: "Fiche App Store — hors ligne",
+        src: "/assets/store-offline.png",
+        wide: true,
+        note: "ID 6810626340. Pas de lien store qui marche.",
+      },
+      {
+        id: "vitrine",
+        title: "Vitrine Aven",
+        src: "/assets/vitrine.png",
+        wide: true,
+        ready: true,
+        note: "aven-workout.vercel.app — live.",
+      },
     ],
   },
 ];
 
-export const posterPrompt = `# Setup VPN TikTok US — Hetzner Ashburn + Outline
-
-Tu es un agent autonome (Cursor / Claude Code) avec accès shell. Tu fais TOUT le serveur toi-même. N'explique pas les commands : exécute-les. Ne demande pas à l'humain de copier-coller du JSON si tu peux SSH.
-
-## Ce que l'humain a DÉJÀ fait — ne le refais pas, ne le demande pas
-- Téléphone dédié reset, langue English (United States), région United States
-- Fuseau New York ou Los Angeles, automatique OFF
-- GPS / Location Services OFF
-- Aucune SIM, Wi-Fi only
-- Email neuf + Apple ID / Google US (ZIP 10001 ou 90001, paiement None)
-- Compte Hetzner Cloud vérifié avec CB
-Toi tu ne touches PAS au téléphone. Uniquement le VPS + Outline.`;
-
 export const faqs = [
   {
-    q: "C’est quoi Process Debloat ?",
-    a: "L’app qu’on vend : Debloat ton visage. Scan, score, recettes, App Store. Tes slideshows amènent au lien useprocess.xyz — pas un coaching filmé.",
+    q: "C’est quoi Aven ?",
+    a: "Une app iPhone de musculation. Tu planifies tes routines, tu suis chaque série, tu vois chaque muscle progresser — rangs, records, XP. Pas de coach IA, pas de nutrition, pas d’Android. Signatures : « Chaque série compte. »",
+  },
+  {
+    q: "Combien je peux gagner ?",
+    a: "Ça dépend des abonnements Aven Pro attribués à ton code. Rien n’est garanti. 40 % du net Aven (après commission Apple) sur le premier paiement de chaque abo attribué. Indicatif : mensuel ≈ 1,00 € · annuel ≈ 9,20 € · à vie ≈ 27,20 €. Pas de récurrence en v1, pas d’achat de vues, pas de forfait.",
   },
   {
     q: "Comment je suis payé ?",
-    a: "40 % du net sur chaque vente, à vie, tant que l’abonnement reste actif. Pas de plafond. Stripe, retenues 30 jours, puis payout. Les primes vues (100k → 50 €, etc.) sont en plus, pas à la place.",
+    a: "À partir de 50 € cumulés, une fois par mois, virement ou PayPal, justificatif requis. En dessous du seuil, le solde reste. Le bouton Stripe Connect de ce portail est une démo locale : rien n’est envoyé à une banque.",
   },
   {
     q: "C’est quoi le lien ?",
-    a: "useprocess.xyz/join/EVRO71 — code EVRO71. Commentaire épinglé, pas en pin + bio. Sans pin + bio, tu fais des vues pour TikTok, pas pour Process.",
+    a: "Ton code unique + un lien tracké vers aven-workout.vercel.app. La fiche App Store (id 6810626340) n’est pas en ligne : ne colle pas un lien store inventé. Publication des clips à partir du lancement App Store.",
+  },
+  {
+    q: "Comment je récupère mon code ?",
+    a: "Candidature (pseudo TikTok, lien, audience, niche, motivation) → validation. Ensuite tu reçois le code, le lien tracké et l’accès au kit. Sur ce portail démo, le code s’édite en local dans Overview.",
   },
   {
     q: "Je filme ou je poste des slideshows ?",
-    a: "On ne se filme pas. Photo Mode TikTok, suite de slides 9:16. SlideshowLab pour monter, Format pour copier les exemples qui marchent.",
+    a: "Les deux marchent si c’est vrai. Slideshow Photo Mode 9:16 accepté. L’authenticité gagne sur gymtok : vraies séances, vraie salle, ta voix. Kit de sources + tes images. Pas de script d’ads.",
   },
   {
-    q: "Combien de comptes ?",
-    a: "Maximum 8 comptes TikTok par iPhone. 1 nouveau par semaine. Pas 8 d’un coup. Les comptes déjà créés sur cet iPhone comptent dans les 8.",
+    q: "Combien de comptes TikTok ?",
+    a: "Un compte TikTok déclaré par clipper. Changement possible après validation. Pas de fermes, pas de multi-comptes, pas de VPN / geo-spoof.",
   },
   {
     q: "Je peux poster via API ?",
-    a: "Poster via API n’est pas le problème. Le compte que tu ne visites pas se fait griller. Chaque jour : rentre dans le compte, like, commente, sondage, scrolle. Pas d’auto-post unofficial ici.",
+    a: "Pas d’auto-post unofficial ici. OAuth officiel n’est pas branché. Tu postes à la main en Photo Mode. Les stats TikTok du dashboard restent à 0 tant que l’API n’est pas branchée.",
   },
   {
-    q: "Je dois poster aux États-Unis ?",
-    a: "Poster US est une page de documentation. Ce portail n’exécute aucun VPN, aucun spoof, aucun script. Lis la page, ne lance rien depuis ici.",
+    q: "La fiche App Store marche ?",
+    a: "Non. L’id 6810626340 est prévu, la fiche est hors ligne. Site vitrine live : aven-workout.vercel.app. Handle : @avenworkout.",
   },
   {
-    q: "Je suis shadowban ?",
-    a: "Si tu as le message « Plus de données », oui. Sinon, moins de 50 vues = souvent shadowban. Arrête 2 jours, scrolle, like, Shop, panier, infos paiement — voir la page Shadowban.",
-  },
-  {
-    q: "Stripe n’est pas branché ?",
-    a: "Le bouton Connecter un compte est une démo locale. Virements via Stripe Connect arriveront plus tard. Rien n’est envoyé à une banque depuis ce portail.",
-  },
-  {
-    q: "Les stats TikTok ?",
-    a: "Disponible bientôt. Le dashboard Overview affiche 0 tant que l’API n’est pas branchée. Tes vrais Analytics restent dans TikTok.",
+    q: "Les captures HD sont où ?",
+    a: "Le kit HD n’est pas encore produit. L’icône Aven est dispo. Les autres visuels du portail sont des placeholders assumés — pas des faux screens de l’app.",
   },
 ];

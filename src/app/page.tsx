@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   CircleHelp,
   Lock,
@@ -68,13 +69,22 @@ export default function OverviewPage() {
       <section className="rounded-2xl border border-neutral-200/80 bg-white px-4 py-3.5 sm:px-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <span className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-900 text-sm font-semibold text-white">
-              {program.inviteName.slice(0, 1)}
+            <span className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-900">
+              <Image
+                src="/brand/aven-icon.png"
+                alt=""
+                width={40}
+                height={40}
+                className="size-10"
+              />
             </span>
             <div>
               <p className="text-[15px] font-semibold tracking-tight">{url}</p>
               <p className="text-[13px] text-neutral-500">
-                Nom sur l’invitation : {program.inviteName}
+                Nom sur l’invitation : {program.inviteName} · code {code}
+              </p>
+              <p className="text-[12px] text-neutral-400">
+                Fiche App Store (id {program.appStoreId}) hors ligne — pas de lien store inventé.
               </p>
             </div>
           </div>
@@ -127,14 +137,17 @@ export default function OverviewPage() {
       <section className="mt-4 rounded-2xl border border-neutral-200/80 px-5 py-5">
         <p className="text-[13px] text-neutral-500">Gains totaux</p>
         <p className="mt-1 text-[28px] font-semibold tracking-tight">€0.00</p>
+        <p className="mt-1 text-[12px] text-neutral-400">
+          40 % du net sur le premier paiement Pro attribué · seuil {program.payoutThreshold}
+        </p>
         <div className="relative mt-8 h-16">
           <div className="absolute inset-x-0 bottom-6 h-px bg-emerald-400/80" />
           <div className="absolute right-0 bottom-7 flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-2 py-0.5 text-[11px] text-neutral-400 shadow-sm">
             <span className="size-2 rounded-full bg-emerald-400" />
             Gains
           </div>
-          <div className="absolute bottom-0 left-0 text-[11px] text-neutral-400">Thu, Aug 13</div>
-          <div className="absolute right-0 bottom-0 text-[11px] text-neutral-400">Fri, Sep 11</div>
+          <div className="absolute bottom-0 left-0 text-[11px] text-neutral-400">—</div>
+          <div className="absolute right-0 bottom-0 text-[11px] text-neutral-400">—</div>
         </div>
       </section>
 
@@ -159,7 +172,7 @@ export default function OverviewPage() {
               {["Vues", "Likes", "Posts"].map((l) => (
                 <div key={l}>
                   <p className="text-xs text-neutral-400">{l}</p>
-                  <p className="text-2xl font-semibold">128.4k</p>
+                  <p className="text-2xl font-semibold">—</p>
                 </div>
               ))}
               <div className="col-span-3 h-24 rounded-lg bg-neutral-100" />
@@ -182,7 +195,8 @@ export default function OverviewPage() {
         </span>
         <p className="mt-3 text-[15px] font-semibold">Aucune commission</p>
         <p className="mx-auto mt-1 max-w-sm text-[13px] leading-relaxed text-neutral-500">
-          Les commissions apparaissent ici dès qu’un install via ton lien s’abonne.
+          Les commissions apparaissent ici dès qu’un Aven Pro est attribué à ton code — premier
+          paiement seulement. Rien n’est garanti.
         </p>
       </section>
 
@@ -191,12 +205,15 @@ export default function OverviewPage() {
           <DialogHeader>
             <DialogTitle>Modifier le lien</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-neutral-500">useprocess.xyz/join/</p>
+          <p className="text-sm text-neutral-500">{program.joinHost}/?c=</p>
           <Input
             value={draft}
             onChange={(e) => setDraft(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))}
-            placeholder="EVRO71"
+            placeholder="AVEN"
           />
+          <p className="text-[12px] text-neutral-400">
+            Lien tracké vers la vitrine. La fiche App Store n’est pas encore en ligne.
+          </p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditOpen(false)}>
               Annuler
@@ -238,8 +255,8 @@ function KpiCard({
       <p className="text-[11px] text-neutral-400">{kpi.hint}</p>
       <div className="mt-3 h-px" style={{ background: kpi.line }} />
       <div className="mt-1 flex justify-between text-[10px] text-neutral-400">
-        <span>Thu, Aug 13</span>
-        <span>Fri, Sep 11</span>
+        <span>—</span>
+        <span>—</span>
       </div>
     </div>
   );
