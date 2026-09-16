@@ -224,13 +224,13 @@ def main() -> None:
     (ROOT / "assets").mkdir(exist_ok=True)
     tile.save(ROOT / "assets" / "icon-tile.png", "PNG", optimize=True)
 
-    poster(ROOT / "format" / "rangs-pecs.png", 720, 960, "01  rangs", "T’es quoi comme rang aux pecs ?", "Performance + régularité. Pas un avant/après.")
-    poster(ROOT / "format" / "live-activity.png", 720, 960, "02  live activity", "Le repos vit sur l’écran verrouillé", "Dynamic Island · charge · reps · timer.")
-    poster(ROOT / "format" / "carte-seance.png", 720, 960, "03  carte 9:16", "Poste ton bilan de séance", "1080×1920, rang global, exercices.")
-    poster(ROOT / "format" / "seance-du-jour.png", 720, 960, "04  programmes", "Ta séance du jour est déjà prête", "Fondations · PPL · Haut/Bas.")
+    poster(ROOT / "format" / "rangs-pecs.png", 720, 960, "01  rangs", "10 groupes.", "Performance + regularite.")
+    poster(ROOT / "format" / "live-activity.png", 720, 960, "02  live activity", "Repos.", "Dynamic Island.")
+    poster(ROOT / "format" / "carte-seance.png", 720, 960, "03  carte 9:16", "1080 x 1920.", "Rang global.")
+    poster(ROOT / "format" / "seance-du-jour.png", 720, 960, "04  programmes", "PPL.", "Fondations · Haut/Bas.")
 
     poster(ROOT / "demarrage" / "rangs-hook.png", 450, 800, "Hook", "T’es quoi comme rang aux pecs ?", "1 seconde, une question.")
-    poster(ROOT / "demarrage" / "rangs-paliers.png", 450, 800, "Preuve", "Bronze → Élite", "10 groupes musculaires.")
+    poster(ROOT / "demarrage" / "rangs-paliers.png", 450, 800, "Preuve", "Bronze - Elite", "10 groupes musculaires.")
     poster(ROOT / "demarrage" / "rangs-app.png", 450, 800, "Payoff", "Chaque série compte.", "Kit HD à coller ici.")
 
     poster(ROOT / "demarrage" / "live-hook.png", 450, 800, "Hook", "Le repos sans déverrouiller", "Zéro friction entre deux séries.")
